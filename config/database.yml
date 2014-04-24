@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: my_boro_production
-  username: my_boro
+  username: jonathanbarcus
   password: <%= ENV['MY_BORO_DATABASE_PASSWORD'] %>
