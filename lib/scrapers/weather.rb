@@ -1,6 +1,3 @@
-#remove the require when adding to MyBoro
-require 'httparty'
-
 class Weather
 
   # gets weather for the specified borough
