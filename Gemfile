@@ -29,6 +29,8 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'httparty'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -52,4 +54,5 @@ group :development, :test do
   gem 'shoulda-matchers' #tests validations/relationships on models
   gem 'annotate'
   gem 'jasmine'
+  gem 'simplecov', '~> 0.7.1'
 end
