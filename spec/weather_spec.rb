@@ -9,7 +9,6 @@ describe Weather do
       expect(new_weather.current_temp).to be_a(String)
     end
 
-
   end
 
 
