@@ -51,4 +51,5 @@ group :development, :test do
   gem 'terminal-notifier-guard' #pops up guard notifier
   gem 'shoulda-matchers' #tests validations/relationships on models
   gem 'annotate'
+  gem 'jasmine'
 end
