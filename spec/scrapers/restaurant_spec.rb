@@ -8,11 +8,11 @@ describe Restaurants do
   describe "A Restaurants Object" do
 
     it "should not be nil after instantiated with a string" do
-      expect(new_restaurants_string).to not_eq(nil)
+      expect(new_restaurants_string).to_not eq(nil)
     end
 
     it "should not be nil after instantiated with lat/long" do
-      expect(new_restaurants_lat_long).to not_eq(nil)
+      expect(new_restaurants_lat_long).to_not eq(nil)
     end
 
   end
@@ -20,7 +20,7 @@ describe Restaurants do
   describe "The Names Method" do
 
     it "should return an array" do
-      expect(new_restaurants_string).to be_an(Array)
+      expect(new_restaurants_string.names).to be_an(Array)
     end
 
     it "should return an array of TEN elements" do
