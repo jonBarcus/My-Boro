@@ -24,12 +24,12 @@ class News
     # this creates an empty array for the headlines to go
     headline_array = []
     # this is a counter for the while loop
-    top_five = 1
+    top_five = 0
 
     # this will loop through the stories that are returned
     # via the GET request and put them as strings in the
     # headline_array array
-    while top_five <= 5
+    while top_five < 5
 
       # this passes the headline from the JSON that was
       # returned in @news_instance in to the array
@@ -51,9 +51,9 @@ class News
   def get_urls
 
     url_array = []
-    top_five = 1
+    top_five = 0
 
-    while top_five <= 5
+    while top_five < 5
       url_array << @news_instance["response"]["docs"][top_five]["web_url"]
       top_five += 1
     end
