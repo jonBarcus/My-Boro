@@ -19,7 +19,9 @@ class Restaurants
     else
       latitude = location[0]
       longitude = location[1]
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=AIzaSyA8OfyjmSJdgy4py_PVNQbQ8a7mrwG7K8U")
+      @lat_long = true
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
+      binding.pry
     end
 
     # creating an empty array for the results from the API
@@ -55,9 +57,17 @@ class Restaurants
   def addresses
     i = 0
     address_array = []
-    while i < @results_array.length - 1 do
-      address_array << @results_array[i]["formatted_address"]
-      i += 1
+
+    if @lat_long == true
+      while i < @results_array.length - 1 do
+        address_array << @results_array[i]["vicinity"]
+        i += 1
+      end
+    else
+      while i < @results_array.length - 1 do
+        address_array << @results_array[i]["formatted_address"]
+        i += 1
+      end
     end
 
     return address_array
