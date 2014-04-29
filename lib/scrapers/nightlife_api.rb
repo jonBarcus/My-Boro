@@ -1,8 +1,8 @@
 # this class calls the Google Places API
 # to be used for providing our application with data
-# regarding restaurants in the NYC area
+# regarding nightlife locations in the NYC area
 # https://developers.google.com/places/documentation/search
-class Restaurants
+class Nightlife
 
   # object instantiation will take either a string ("Queens")
   # or a longitude and latitude (40.741061, -73.989699)
@@ -13,15 +13,18 @@ class Restaurants
     # names of the boroughs OR long/lat
     # if the first location element is not one of the five
     # boroughs, it will then assume long/lat was provided
+
+    # GET requests currently have BAR specified as opposed to
+    # nightlife/night_club
+    # May want to investigate using OR
     if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
       location = location[0].gsub(" ", "+")
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=bars+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
     else
       latitude = location[0]
       longitude = location[1]
       @lat_long = true
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
-      binding.pry
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=bar&sensor=false&types=bar&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
     end
 
     # creating an empty array for the results from the API
@@ -89,13 +92,3 @@ class Restaurants
   end
 
 end
-
-# Restaurant.top_10(40.741061, -73.989699)
-
-# Revelant calls:
-# @response[0]["name"]
-# @response[0]["rating"]
-# @response[0]["photos"]["photo_reference"]
-# @response[0]["vicinity"] returns formatted address
-
-# test = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+#{location}&sensor=false&key=AIzaSyA8OfyjmSJdgy4py_PVNQbQ8a7mrwG7K8U&opennow")
