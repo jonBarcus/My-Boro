@@ -1,9 +1,11 @@
 My Boro V0.1.0
 
+[![Build Status](https://travis-ci.org/jonBarcus/My-Boro.svg?branch=master)](https://travis-ci.org/jonBarcus/My-Boro)
 
-User Stories
+[Link to ERD](https://github.com/jonBarcus/My-Boro/blob/master/erd.pdf)
 
-pivotal tracker for this project
+[Link to Pivotal Tracker](https://www.pivotaltracker.com/s/projects/1067190)
+
 
 Heroku App
 
@@ -11,3 +13,9 @@ visit on heroku
 
 Current Specs
 
+Development Team:
+
+[Michael Oshman](https://github.com/oshmanm)
+[Carolyn Ganon](https://github.com/ganondalf)
+[Joshua Guthals](https://github.com/zioplox11)
+[Jonathan Barcus](https://github.com/jonBarcus)
