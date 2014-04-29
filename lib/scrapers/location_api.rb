@@ -3,18 +3,22 @@ module Location
 
   def self.zipcode()
     zip_code = @response["zip"]
+    return zip_code
   end
 
   def self.lat()
     lat = @response["lat"]
+    return lat
   end
 
   def self.lon()
     lon = @response["lon"]
+    return
   end
 
   def self.region()
     region = @response["region"]
+    return region
   end
 
 end
