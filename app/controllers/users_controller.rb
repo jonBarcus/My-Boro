@@ -3,17 +3,16 @@ class UsersController < ApplicationController
   def index
   end
 
-  def new
-    @user = User.new
-  end
-
   def create
-    @user = User.new(user_params)
-    if @user.save
-      redirect_to root_path
-    else
-      render(:new)
-    end
+    User.create!(
+      name: params[:name],
+      email: params[:email],
+      password: params[:password]
+      password_confirmation: params[:password]
+    )
+
+    render :json => { message: "User account added successfully!" }
+  end
   end
 
   def edit
