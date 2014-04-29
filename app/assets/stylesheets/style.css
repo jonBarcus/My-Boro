@@ -40,7 +40,20 @@ html {
   height: 75px;
 }
 
-.img_header_session{
+.img_new_session{
+/*  border: 2px solid green;*/
+  position:relative;
+  display:inline-block;
+  top: -20px;
+  left: 380px;
+  margin: 0 0 0 20px;
+  height: 40px;
+  width: 60px;
+}
+
+
+
+.img_login_session{
 /*  border: 2px solid green;*/
   position:relative;
   display:inline-block;
