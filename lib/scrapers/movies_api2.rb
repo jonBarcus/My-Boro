@@ -6,11 +6,24 @@ require 'open-uri'
 class Movies
 
   def initialize(*location)
+    date = #todays date
     if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
+      location = location[0]
+      now = Time.now
+      if now.hour >=12
+        time = 2
+      else
+        time = 1
+      end
+      @response = HTTParty.get("http://www.google.com/movies?near=#{location}&mid=&hl=en&date=0&view=list&time=#{time}")
+    end
 
   end
 
 
+  def display
+    return @response
+  end
 
 end
 
@@ -18,7 +31,7 @@ end
 module Movies_api
 
   @base_uri = "http://www.google.com/movies?"
-
+  #deprecated
   def self.convert_location(arg1, arg2, arg3, arg4)
       latitude = arg1
       longitude = arg2
@@ -28,7 +41,7 @@ module Movies_api
       # return @location = zip
       return @location = boro + "%2CNY"
   end
-
+  #deprecated
   def self.build_request(time, date)
     movie_time = time
     movie_date = date
