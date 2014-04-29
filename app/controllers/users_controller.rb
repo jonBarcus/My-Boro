@@ -10,9 +10,8 @@ class UsersController < ApplicationController
       password: params[:password]
       password_confirmation: params[:password]
     )
-
-    render :json => { message: "User account added successfully!" }
-  end
+      render :json => { message: "User account added successfully!" }
+    end
   end
 
   def edit

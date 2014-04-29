@@ -2,9 +2,12 @@
 var totalHeader = {
 
   onReady: function(){
+    $("body").append("#main_container")
+    $("#main_container").append("#header")
     $("#header").append("<img src='assets/PNGs/My-Boro_Header.png' class='img_header_logo'>");
     $("#header").append("<img src='assets/PNGs/Sign_Up.png' class='img_new_session'>");
     $("#header").append("<img src='assets/PNGs/Log_In.png' class='img_login_session'>");
+    $("#header").append("<div id='line'>");
     $(".img_new_session").on("click", totalHeader.showSignUpForm);
     $("#signUpForm").hide();
     $("#subheader").hide();
