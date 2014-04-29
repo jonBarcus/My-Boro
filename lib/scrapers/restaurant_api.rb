@@ -29,7 +29,7 @@ class Restaurants
 
     # will put the first 10 results from the API call
     # in to the results_array
-     while @results_array.length < 10 do
+     while @results_array.length <= 10 do
       @results_array << response["results"][i]
       i += 1
     end
