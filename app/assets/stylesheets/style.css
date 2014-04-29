@@ -1,0 +1,61 @@
+html {
+  background: url(bg1.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+p {
+  color: purple;
+  font-family: Gotham Rounded
+}
+
+#main_container {
+  position: relative;
+  border: 2px solid black;
+  height: 1000px;
+  width: 960px;
+  margin: 0 auto;
+}
+
+#header {
+  position:relative;
+  display: block;
+  width: 950px;
+  height: 100px;
+  margin: 0 auto;
+  border: 2px solid red;
+}
+
+#img_header{
+  position:relative;
+  display:inline-block;
+  top: 0px;
+  left: 0px;
+  margin: 0 0 0 0;
+   border: 2px solid green;
+
+}
+
+#main_body{
+  position:relative;
+  width: 950px;
+  height: 800px;
+  margin: 0 auto;
+  border: 2px solid gray;
+
+}
+
+
+#category_container{
+  position:relative;
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  border: 2px solid black;
+
+}
+
+
