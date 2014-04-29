@@ -6,11 +6,14 @@ module Movies_api
 
   @base_uri = "http://www.google.com/movies?"
 
-  def self.convert_location(arg1, arg2, arg3)
+  def self.convert_location(arg1, arg2, arg3, arg4)
       latitude = arg1
       longitude = arg2
       zip = arg3
-      return @location = latitude.to_s + "%2C" + longitude.to_s
+      boro = arg4
+      # return @location = latitude.to_s + "%2C" + longitude.to_s
+      # return @location = zip
+      return @location = boro + "%2CNY"
   end
 
   def self.build_request(time, date)
@@ -47,7 +50,7 @@ module Movies_api
         end
         counter = 1
         node.next_sibling.css(".times").each do |movie|
-          movie_hash[:times] = movie.text
+          movie_hash[:times] = movie.text.gsub(/[a-zA-Z\&\s\z]/, " ").split(" ")
           movie_info.insert(counter, movie_hash[:times].dup)
           counter += 2
         end
@@ -68,19 +71,29 @@ module Movies_api
         theater = my_theater[:name]
         address = my_theater[:address]
         movie1 = my_theater[:movies][0]
-        movie_time1 = my_theater[:movies][1].split(/[a-zA-Z\&\s\z]/).join(" ")
-        movie2 = my_theater[:movies][2]
-        movie_time2 = my_theater[:movies][3].split(/[a-zA-Z\&\s\z]/).join(" ")
-        return puts theater + "\n" + address + "\n" + movie1 + " " + movie_time1+ "\n" + movie2 + " " + movie_time2
+        movie_time1 = my_theater[:movies][1]
+        if (movie2 = my_theater[:movies][2])
+          movie_time2 = my_theater[:movies][3]
+        else
+          movie2 = ""
+          movie_time2 = []
+        end
+
+        return movie_array = [theater, address, [movie1, movie_time1], [movie2, movie_time2] ]
   end
 
   def self.top_nine_movies(user_time, user_date)
     time = user_time
     date = user_date
     self.closest_movies(time, date)
-    self.display_a_sampler(0)
-    self.display_a_sampler(1)
-    self.display_a_sampler(3)
+    my_movies = {
+          :movies1 => self.display_a_sampler(0),
+          :movies2 => self.display_a_sampler(1),
+          :movies3 => self.display_a_sampler(3)
+      }
+      return my_movies
+
+
   end
 
 end
