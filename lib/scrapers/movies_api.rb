@@ -2,66 +2,85 @@ require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
-
 module Movies_api
-  include Location
 
-  base_uri = "http://www.google.com/movies?"
+  @base_uri = "http://www.google.com/movies?"
+
+  def self.convert_location(arg1, arg2, arg3)
+      latitude = arg1
+      longitude = arg2
+      zip = arg3
+      return @location = latitude.to_s + "%2C" + longitude.to_s
+  end
+
+  def self.build_request(time, date)
+    movie_time = time
+    movie_date = date
+    search = "near=" + @location.to_s + "&mid=&hl=en&date=" + movie_date.to_s + "&view=list&time=" + movie_time.to_s
+    test_uri = @base_uri + search
+    return request = Nokogiri::HTML(open(test_uri))
+  end
+
+  def self.closest_movies(user_time, user_date)
+    time=user_time
+    date=user_date
+    request = build_request(time, date)
+
+    @local_movies = []
+
+    theaters = request.css(".desc")
+    movie_info = []
+    theater_hash = {}
+    movie_hash = {}
+
+    theaters.each do |theater|
+
+    theater_hash[:id] = "#" + theater.attributes["id"].value
+    theater_hash[:name] = theater.css("h2").text
+    theater_hash[:address] = theater.css(".info").text
 
 
-  near=brooklyn%2Cny&
-  mid=&
-  hl=en&
-  date=0&
-  view=list&
-  time=0
+      request.css(theater_hash[:id]).each do |node|
+        node.next_sibling.css(".name").each do |movie|
+          movie_hash[:name] = movie.text
+          movie_info << movie_hash[:name].dup
+        end
+        counter = 1
+        node.next_sibling.css(".times").each do |movie|
+          movie_hash[:times] = movie.text
+          movie_info.insert(counter, movie_hash[:times].dup)
+          counter += 2
+        end
+      end
 
-  def method_1
+      theater_hash[:movies] = movie_info.dup
+      movie_info = []
+      @local_movies << theater_hash.dup
 
+    end
+
+      return @local_movies
+
+  end
+
+  def self.display_a_sampler(number)
+        my_theater = @local_movies[number]
+        theater = my_theater[:name]
+        address = my_theater[:address]
+        movie1 = my_theater[:movies][0]
+        movie_time1 = my_theater[:movies][1].split(/[a-zA-Z\&\s\z]/).join(" ")
+        movie2 = my_theater[:movies][2]
+        movie_time2 = my_theater[:movies][3].split(/[a-zA-Z\&\s\z]/).join(" ")
+        return puts theater + "\n" + address + "\n" + movie1 + " " + movie_time1+ "\n" + movie2 + " " + movie_time2
+  end
+
+  def self.top_nine_movies(user_time, user_date)
+    time = user_time
+    date = user_date
+    self.closest_movies(time, date)
+    self.display_a_sampler(0)
+    self.display_a_sampler(1)
+    self.display_a_sampler(3)
   end
 
 end
-
-
-Mod.class              #=> Module
-Mod.constants          #=> [:CONST, :PI, :E]
-Mod.instance_methods   #=> [:meth]
-
-
-fred = Module.new do
-  def meth1
-    "hello"
-  end
-  def meth2
-    "bye"
-  end
-end
-
-a = "my string"
-a.extend(fred)   #=> "my string"
-a.meth1          #=> "hello"
-a.meth2          #=> "bye"
-
-
-
-+module Location
- +  @response = HTTParty.get('http://ip-api.com/json')
- +
- +  def self.zipcode()
- +    zip_code = @response["zip"]
- +  end
- +
- +  def self.lat()
- +    lat = @response["lat"]
- +  end
- +
- +  def self.lon()
- +    lon = @response["lon"]
- +  end
- +
- +  def self.region()
- +    region = @response["region"]
- +  end
- +
- +end
-
