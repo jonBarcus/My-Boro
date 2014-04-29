@@ -36,7 +36,7 @@ class Restaurants
 
   end
 
-  # this function returns the names of the restaurants
+  # this method returns the names of the restaurants
   # in an array
   def names
     i = 0
@@ -50,7 +50,7 @@ class Restaurants
 
   end
 
-  # this function returns the addresses of the
+  # this method returns the addresses of the
   # restaurants in the array
   def addresses
     i = 0
