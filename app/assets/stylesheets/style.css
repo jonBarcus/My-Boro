@@ -1,61 +1,136 @@
 html {
-  background: url(bg1.jpg) no-repeat center center fixed;
+  background: url(bg.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-p {
-  color: purple;
-  font-family: Gotham Rounded
+.remember-this-will-NOT-be-read {
+   display: none !important;
 }
 
 #main_container {
-  position: relative;
   border: 2px solid black;
+  position: relative;
   height: 1000px;
   width: 960px;
   margin: 0 auto;
 }
 
 #header {
+  border: 2px solid red;
   position:relative;
   display: block;
   width: 950px;
-  height: 100px;
+  height: 60px;
   margin: 0 auto;
-  border: 2px solid red;
+  top: 10px;
+
 }
 
-#img_header{
+#img_header_logo{
+  border: 2px solid green;
   position:relative;
   display:inline-block;
-  top: 0px;
-  left: 0px;
-  margin: 0 0 0 0;
-   border: 2px solid green;
+  top: -20px;
+  left: -74px;
+  margin: 0 0 -10px 0;
+  width: 360px;
+  height: 75px;
+}
 
+#img_header_session{
+  border: 2px solid green;
+  position:relative;
+  display:inline-block;
+  top: -20px;
+  left: 380px;
+  margin: 0 0 0 20px;
+  height: 40px;
+  width: 60px;
 }
 
 #main_body{
+  border: 4px solid gray;
   position:relative;
   width: 950px;
-  height: 800px;
+  height: 700px;
   margin: 0 auto;
-  border: 2px solid gray;
 
 }
 
 
 #category_container{
+  border: 2px solid gray;
   position:relative;
   display: inline-block;
   width: 300px;
   height: 300px;
   margin: 0 auto;
-  border: 2px solid black;
+}
+
+
+.boro {
+  border: 2px solid white;
+  position:relative;
+  color: blue;
 
 }
 
+.category {
+  border: 2px solid yellow;
+  position: relative;
+  color: purple;
+}
+
+#boro_image{
+    border: 2px solid red;
+  display: block;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 290px;
+  width: 290px;
+  overflow: hidden;
+  margin:0 auto;
+  padding:0 0 0 0;
+}
+
+#boro_image_queens {
+  border: 2px solid red;
+  display: block;
+  position: relative;
+  top: 20px;
+  left: 0px;
+  height: 260px;
+  width: 260px;
+  overflow: hidden;
+  margin:0 auto;
+  padding:0 0 0 0;
+
+}
+
+#category_image{
+  border: 2px solid purple;
+  display: block;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 290px;
+  width: 290px;
+  overflow: hidden;
+  margin:0 auto;
+  padding:0 0 0 0;
+}
+
+
+#line{
+  border: 2px solid black;
+  position:relative;
+  height: 0px;
+  width: 920px;
+  top:-30px;
+  border-radius: 12px;
+}
 
