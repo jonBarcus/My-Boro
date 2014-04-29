@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'scrapers/weather_api'
 
 describe Weather do
 

@@ -148,56 +148,10 @@
       "/Users/jonathanbarcus/dev/wdi/my_boro/config/routes.rb": [
         1,
         null,
+        1,
         null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        1,
+        1,
         null,
         null,
         null,
@@ -207,7 +161,7 @@
         1,
         null
       ],
-      "/Users/jonathanbarcus/dev/wdi/my_boro/app/models/news.rb": [
+      "/Users/jonathanbarcus/dev/wdi/my_boro/lib/scrapers/news_api.rb": [
         1,
         null,
         1,
@@ -278,6 +232,7 @@
       ],
       "/Users/jonathanbarcus/dev/wdi/my_boro/spec/weather_spec.rb": [
         1,
+        1,
         null,
         1,
         null,
@@ -330,7 +285,7 @@
         null,
         null
       ],
-      "/Users/jonathanbarcus/dev/wdi/my_boro/app/models/weather.rb": [
+      "/Users/jonathanbarcus/dev/wdi/my_boro/lib/scrapers/weather_api.rb": [
         1,
         null,
         null,
@@ -384,6 +339,6 @@
         null
       ]
     },
-    "timestamp": 1398718882
+    "timestamp": 1398783150
   }
 }

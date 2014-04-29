@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'scrapers/news_api'
 
 describe News do
 
