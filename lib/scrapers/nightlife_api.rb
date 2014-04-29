@@ -13,13 +13,18 @@ class Nightlife
     # names of the boroughs OR long/lat
     # if the first location element is not one of the five
     # boroughs, it will then assume long/lat was provided
+
+    # GET requests currently have BAR specified as opposed to
+    # nightlife/night_club
+    # May want to investigate using OR
     if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
       location = location[0].gsub(" ", "+")
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=nightlife+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=bars+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
     else
       latitude = location[0]
       longitude = location[1]
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=nightlife&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
+      @lat_long = true
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=bar&sensor=false&types=bar&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
     end
 
     # creating an empty array for the results from the API
