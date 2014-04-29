@@ -21,7 +21,7 @@ end
 
 Restaurant.top_10(40.741061, -73.989699)
 
-# Revelant calls:
+# Relavent calls:
 # @response[0]["name"]
 # @response[0]["rating"]
 # @response[0]["photos"]["photo_reference"]
