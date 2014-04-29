@@ -15,7 +15,7 @@ class Restaurants
     # boroughs, it will then assume long/lat was provided
     if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
       location = location[0].gsub(" ", "+")
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+#{location}&sensor=false&key=AIzaSyA8OfyjmSJdgy4py_PVNQbQ8a7mrwG7K8U&opennow")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
     else
       latitude = location[0]
       longitude = location[1]

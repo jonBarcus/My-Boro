@@ -15,11 +15,11 @@ class Nightlife
     # boroughs, it will then assume long/lat was provided
     if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
       location = location[0].gsub(" ", "+")
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=nightlife+in+#{location}&sensor=false&key=AIzaSyA8OfyjmSJdgy4py_PVNQbQ8a7mrwG7K8U&opennow")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=nightlife+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
     else
       latitude = location[0]
       longitude = location[1]
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=nightlife&sensor=false&types=restaurant&zagat_selected&key=AIzaSyA8OfyjmSJdgy4py_PVNQbQ8a7mrwG7K8U")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=nightlife&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
     end
 
     # creating an empty array for the results from the API
@@ -55,9 +55,17 @@ class Nightlife
   def addresses
     i = 0
     address_array = []
-    while i < @results_array.length - 1 do
-      address_array << @results_array[i]["formatted_address"]
-      i += 1
+
+    if @lat_long == true
+      while i < @results_array.length - 1 do
+        address_array << @results_array[i]["vicinity"]
+        i += 1
+      end
+    else
+      while i < @results_array.length - 1 do
+        address_array << @results_array[i]["formatted_address"]
+        i += 1
+      end
     end
 
     return address_array
