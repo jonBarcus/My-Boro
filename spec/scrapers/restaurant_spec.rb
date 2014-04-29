@@ -30,7 +30,30 @@ describe Restaurants do
 
   end
 
+  describe "The Addresses Method" do
 
+    it "should return an array" do
+      expect(new_restaurants_lat_long.addresses).to be_an(Array)
+    end
 
+    it "should return an array of TEN elements" do
+      test_array = new_restaurants_lat_long.addresses
+      expect(test_array.length).to eq(10)
+    end
+
+  end
+
+  describe "The Ratings Method" do
+
+    it "should return an array" do
+      expect(new_restaurants_string.ratings).to be_an(Array)
+    end
+
+    it "should return an array of TEN elements" do
+      test_array = new_restaurants_string.ratings
+      expect(test_array.length).to eq(10)
+    end
+
+  end
 
 end
