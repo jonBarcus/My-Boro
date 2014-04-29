@@ -2,6 +2,19 @@ require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
+
+class Movies
+
+  def initialize(*location)
+    if location[0] == "Queens" || location[0] == "Staten Island" || location[0] == "Bronx" || location[0] == "Manhattan" || location[0] == "Brooklyn"
+
+  end
+
+
+
+end
+
+
 module Movies_api
 
   @base_uri = "http://www.google.com/movies?"
