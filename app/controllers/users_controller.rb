@@ -7,8 +7,8 @@ class UsersController < ApplicationController
     User.create!(
       name: params[:name],
       email: params[:email],
-      password: params[:password]
-      password_confirmation: params[:password]
+      password: params[:password],
+      password_confirmation: params[:password_confirmation]
     )
       render :json => { message: "User account added successfully!" }
     end
@@ -40,3 +40,9 @@ class UsersController < ApplicationController
   end
 
 end
+
+url: "/users"
+type: "POST"
+dataTYPE: 'JSON'
+var
+data: {name: name, email: email, password: password, password_confirmation: password_confirmation }
