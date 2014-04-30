@@ -8,7 +8,10 @@ onReady: function(){
       buildPage.buildForms();
       buildPage.buildMaps();
       buildPage.buildCategories();
-      buildPage.showSignUpForm();
+      buildPage.hideForm();
+      $(".img_new_session").on("click", buildPage.showSignUpForm);
+      $("form").on("click", buildPage.signUpNewUser)
+      $("#weather_icon").on("click", buildPage.showWeather)
   },
 
 
@@ -52,11 +55,9 @@ buildHeader: function(){
 
 
   buildForms: function(){
-
+    var form = $("#signUpForm")
     $("body").append("<div id='main_container'>");
-
-    $("#main_container").append("#signUpForm");
-
+    $("#main_container").append(form);
 
   },
 
@@ -123,11 +124,41 @@ buildCategories: function(){
 
 },
 
+  hideForm: function(){
+    $("#signUpForm").hide();
+  },
 
   showSignUpForm: function(event){
     $("#signUpForm").slideDown();
   },
 
+  signUpNewUser: function(event){
+    event.preventDefault();
+    console.log(this)
+    var form = ("form")
+    var name = $("#user_name").val()
+    var email = $("#user_email").val()
+    var password = $("#user_password").val()
+    var password_confirmation = $("#user_password_confirmation").val();
+
+        $.ajax({
+          type: 'POST',
+          url: '/users',
+          data: {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+            }
+          }).done(function(){
+            // var message = $('<p>' + data.message + '</p>');
+            // form.after(message);
+          });
+  },
+
+  showWeather: function(){
+
+  }
 
   chooseBureau: function(){
     // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
