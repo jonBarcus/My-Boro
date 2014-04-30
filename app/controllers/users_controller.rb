@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   def index
+
   end
 
   def create
@@ -8,13 +9,19 @@ class UsersController < ApplicationController
       name: params[:name],
       email: params[:email],
       password: params[:password],
+<<<<<<< HEAD
       password_confirmation: params[:password_confirmation]
     )
+=======
+      password_confirmation: params[:password]
+      )
+>>>>>>> 4283a6b222e4e544c8c57c1e8d63e7f9fbce8640
       render :json => { message: "User account added successfully!" }
-    end
+    # end
   end
 
   def edit
+
   end
 
   def update
