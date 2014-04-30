@@ -8,19 +8,21 @@ onReady: function(){
       buildPage.buildMaps();
       buildPage.buildCategories();
       buildPage.hideForm();
-      $(".img_new_session").on("click", buildPage.showSignUpForm);
-      $("form").on("click", buildPage.signUpNewUser)
-      $("#weather_icon").on("click", buildPage.showWeather)
+      buildPage.hideSubHeader();
+      $("#sign_up").on("click", buildPage.showSignUpForm);
+      $("form").on("submit", buildPage.signUpNewUser);
+      $("#weather_icon").on("click", buildPage.showWeather);
   },
 
 
 buildHeader: function(){
 
-    var buildHeader = $("<div id='header'>");
+    var buildHeader = $('<div id="header">');
 
-    buildHeader.append("<img class='img_header_logo' src='assets/PNGs/My-Boro_Header.png'>")
-                        .append("<img src='assets/PNGs/Sign_Up.png' class='img_new_session'>")
-                        .append("<img src='assets/PNGs/Log_In.png' class='img_login_session'>");
+    buildHeader
+      .append('<img class="img_header_logo" src="assets/PNGs/My-Boro_Header.png">')
+      .append('<a href="" id="sign_up"><img src="assets/PNGs/Sign_Up.png" class="img_new_session"></a>')
+      .append('<img src="assets/PNGs/Log_In.png" class="img_login_session">');
 
    buildHeader.append("<div id='line'>");
 
@@ -126,14 +128,19 @@ buildCategories: function(){
     $("#signUpForm").hide();
   },
 
+  hideSubHeader: function(){
+    $("#subheader").hide();
+  },
+
   showSignUpForm: function(event){
+    event.preventDefault();
     $("#signUpForm").slideDown();
   },
 
   signUpNewUser: function(event){
     event.preventDefault();
     console.log(this)
-    var form = ("form")
+    var form = $("form")
     var name = $("#user_name").val()
     var email = $("#user_email").val()
     var password = $("#user_password").val()
@@ -142,15 +149,15 @@ buildCategories: function(){
         $.ajax({
           type: 'POST',
           url: '/users',
-          data: {
-            name: name,
-            email: email,
-            password: password,
-            password_confirmation: password_confirmation
-            }
-          }).done(function(){
-            // var message = $('<p>' + data.message + '</p>');
-            // form.after(message);
+          data: { user: {
+                        name: name,
+                        email: email,
+                        password: password,
+                        password_confirmation: password_confirmation}
+                }
+          }).done(function(response){
+            form.after(response.message);
+            form.fadeOut();
           });
   },
 

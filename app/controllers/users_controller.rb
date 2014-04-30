@@ -13,40 +13,22 @@ class UsersController < ApplicationController
   end
 
   def create
-    User.create!(
-      name: params[:name],
-      email: params[:email],
-      password: params[:password],
-      password_confirmation: params[:password]
-      )
-      render :json => { message: "User account added successfully!" }
-    # end
-  end
-
-  def edit
-
-  end
-
-  def update
-    @user = User.find(@current_user.id)
-    @user.update(user_params)
-
-    if @user.save
-      redirect_to root_path
+    user = User.new(user_params)
+    if user.save
+      render :json => { message: "Sign up successful!", name: user.name }
     else
-      flash[:notice] = "User update was unsuccessful. Please try again!"
-      render(:edit)
+      render :json => { error: "sucksss"}
     end
   end
 
-  # private
-  # def user_params
-  #   params.require(:user).permit(
-  #     :name,
-  #     :email,
-  #     :password,
-  #     :password_confirmation
-  #   )
-  # end
+  private
+  def user_params
+    params.require(:user).permit(
+      :name,
+      :email,
+      :password,
+      :password_confirmation
+    )
+  end
 
 end
