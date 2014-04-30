@@ -1,20 +1,22 @@
 class UsersController < ApplicationController
 
   def index
+
   end
 
   def create
     User.create!(
       name: params[:name],
       email: params[:email],
-      password: params[:password]
+      password: params[:password],
       password_confirmation: params[:password]
-    )
+      )
       render :json => { message: "User account added successfully!" }
-    end
+    # end
   end
 
   def edit
+
   end
 
   def update
