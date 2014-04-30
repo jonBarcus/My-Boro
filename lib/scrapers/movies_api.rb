@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'open-uri'
-
 # this class will do a search for Movies in/around
 # a specified location.  The location can be given as
 # a STRING: "Staten Island", a ZIP: 10017, or LATTITUDE/
