@@ -1,4 +1,3 @@
-
 var buildPage = {
 
 
@@ -156,8 +155,16 @@ buildCategories: function(){
   },
 
   showWeather: function(){
+    var container = $("#weather_icon.category_container")
 
-  }
+    $.ajax({
+          type: 'GET',
+          url: '/users',
+          dataType: 'json'
+          }).done(function(response){
+            console.log(response);
+          });
+  },
 
   chooseBureau: function(){
     // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
