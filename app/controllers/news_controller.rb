@@ -1,9 +1,8 @@
 require 'scrapers/news_api'
 
-class WireController < ApplicationController
+class NewsController < ApplicationController
 
   def show
-    binding.pry
     news = NewsAPI.new(params[:location])
     response = {
       current_headlines: news.get_headlines,

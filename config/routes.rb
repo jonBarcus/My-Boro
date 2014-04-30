@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get '/weather/' => 'weather#show'
 
-  get '/news/' => 'wire#show'
+  get '/news/' => 'news#show'
 
 
 end

@@ -192,12 +192,20 @@ buildCategories: function(){
         dataType: 'json',
         data: { location: location }
         }).done(function(response){
-            console.log(response.currentHeadlines)
-          //   var headlines = response.currentHeadlines;
-          //   var urls = response.currentUrls;
-          //   var bundle = $('<div class="inner_information">').html("<p><strong>Headlines: </strong>"+headlines+"</p><p><strong>URLS: </strong>"+urls+"</p>");
-          //   container.append(bundle);
-          // debugger;
+            var headlines = response.currentHeadlines;
+            var urls = response.currentUrls;
+            var myList = $('<div class="inner_information">');
+
+            $.each(headlines, function(index, headline) {
+              debugger;
+
+                var story = $('<ul>').html('<strong>'+ headline + '</strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
+                myList.append(story);
+            });
+
+
+          container.append(myList);
+
           });
   },
 
