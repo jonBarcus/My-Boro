@@ -8,11 +8,11 @@ onReady: function(){
       buildPage.buildCategories();
       buildPage.hideForm();
       buildPage.hideSubHeader();
-      $("#sign_up").on("click", buildPage.showSignUpForm);
+      $("#sign_up").click(buildPage.showSignUpForm);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#weather_icon").click(buildPage.showWeather);
       $("#news_icon").click(buildPage.showNews);
-      $("#food_icon").on("click", buildPage.showFood);
+      $("#food_icon").click(buildPage.showFood);
       $("#movies_icon").click(buildPage.showMovies);
 
   },
@@ -231,9 +231,41 @@ buildCategories: function(){
 
                 var theater = $('<ul>').html('<strong>'+ theater + '</strong><p>' + addresses[index] + '</>');
                 myList.append(theater);
+                var movie_one = $('<ul>').html(movies[index][0])
+                var one_times_first = $('<ul>').html(movies_times[index][0][0])
+                movie_one.append(one_times_first)
+                if (!(movies_times[index][0][1] === undefined)) {
+                var one_times_second = $('<ul>').html(movies_times[index][0][1])
+                movie_one.append(one_times_second)
+                }
+                if (!(movies_times[index][0][2] == undefined)) {
+                var one_times_third = $('<ul>').html(movies_times[index][0][2])
+                movie_one.append(one_times_third)
+                }
+                myList.append(movie_one)
+                if (!(movies[index][1] === undefined)) {
+
+                  var movie_two = $('<ul>').html(movies[index][1])
+                  var two_times_first = $('<ul>').html(movies_times[index][0][0])
+                  var two_times_second = $('<ul>').html(movies_times[index][0][1])
+                  var two_times_third = $('<ul>').html(movies_times[index][0][2])
+                  movie_two.append(two_times_first)
+                  movie_two.append(two_times_second)
+                  movie_two.append(two_times_third)
+                  myList.append(movie_two)
+                }
+                // var movie_three = $('<ul>').html(movies[index][2])
+                // var three_times_first = $('<ul>').html(movies_times[index][0][0])
+                // var three_times_second = $('<ul>').html(movies_times[index][0][1])
+                // var three_times_third = $('<ul>').html(movies_times[index][0][2])
+
+                // movie_three.append(three_times_first)
+                // movie_three.append(three_times_second)
+                // movie_three.append(three_times_third)
+                // myList.append(movie_three)
             });
 
-          container.append(myList);
+            container.append(myList);
 
           });
   },

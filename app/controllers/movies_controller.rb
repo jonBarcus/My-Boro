@@ -1,3 +1,4 @@
+require 'scrapers/movies_api'
 
 class MoviesController < ApplicationController
 
