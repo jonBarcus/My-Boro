@@ -3,7 +3,7 @@
 # a STRING: "Staten Island", a ZIP: 10017, or LATTITUDE/
 # LONGITUDE:  40.741061, -73.989699
 # It makes use of Nokogiri and open-uri
-class Movies
+class MoviesAPI
 
   def initialize(*location)
     now = Time.now

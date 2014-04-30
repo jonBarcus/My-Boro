@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'scrapers/news_api'
 
-describe News do
+describe NewsAPI do
 
-  let(:test) {News.new("Queens")}
+  let(:test) {NewsAPI.new("Queens")}
 
   describe "Get Headlines Method" do
 
