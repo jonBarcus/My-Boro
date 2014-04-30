@@ -10,7 +10,9 @@ onReady: function(){
       buildPage.hideSubHeader();
       $("#sign_up").on("click", buildPage.showSignUpForm);
       $("form").on("submit", buildPage.signUpNewUser);
-      $("#weather_icon").on("click", buildPage.showWeather);
+      $("#weather_icon").click(buildPage.showWeather);
+      $("#news_icon").click(buildPage.showNews);
+
   },
 
 
@@ -161,8 +163,9 @@ buildCategories: function(){
   },
 
   showWeather: function(event){
-    var container = $("#weather_icon.category_container")
-    var location = "Brooklyn"
+    var container = $("#weather_icon.category_container");
+
+    var location = "Brooklyn";
     $.ajax({
           type: 'GET',
           url: "/weather/", /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#show*/
@@ -171,10 +174,35 @@ buildCategories: function(){
           }).done(function(response){
             console.log(response.currentTemp)
             var temperature = response.currentTemp
-            var blah = $('<div class="inner_information">').html("<p><strong>Current Temp</strong> "+temperature+" </p>");
-            container.append(blah);
+            var humidity = response.currentHumidity
+            var wind = response.currentWind
+            var description = response.currentWeather
+            var bundle = $('<div class="inner_information">').html("<p><strong>Current Temperature: </strong>"+temperature+"</p><p><strong>Humidity: </strong>"+humidity+"</p><p><strong>Wind: </strong>"+wind+"</p><p><strong>Info: </strong>"+description+"</p>");
+            container.append(bundle);
           });
   },
+
+
+    showNews: function(event){
+    var container = $("#news_icon.category_container");
+    var location = "Brooklyn";
+    $.ajax({
+        type: 'GET',
+        url: "/news/",
+        dataType: 'json',
+        data: { location: location }
+        }).done(function(response){
+            console.log(response.currentHeadlines)
+          //   var headlines = response.currentHeadlines;
+          //   var urls = response.currentUrls;
+          //   var bundle = $('<div class="inner_information">').html("<p><strong>Headlines: </strong>"+headlines+"</p><p><strong>URLS: </strong>"+urls+"</p>");
+          //   container.append(bundle);
+          // debugger;
+          });
+  },
+
+
+
 
   chooseBureau: function(){
     // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
