@@ -11,6 +11,10 @@
 #  updated_at      :datetime
 #
 
+
 class User < ActiveRecord::Base
-      has_many :favorites
+      has_many :movies
+      has_many :drinks
+      has_many :restaurants
+      has_many :news_items
 end
