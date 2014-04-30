@@ -138,7 +138,7 @@ buildCategories: function(){
 
   signUpNewUser: function(event){
     event.preventDefault();
-    console.log(this)
+
     var form = $("form")
     var name = $("#user_name").val()
     var email = $("#user_email").val()
@@ -160,15 +160,19 @@ buildCategories: function(){
           });
   },
 
-  showWeather: function(){
+  showWeather: function(event){
     var container = $("#weather_icon.category_container")
-
+    var location = "Brooklyn"
     $.ajax({
           type: 'GET',
-          url: '/weather/location', /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#location*/
-          dataType: 'json'
+          url: "/weather/", /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#show*/
+          dataType: 'json',
+          data: { location: location }
           }).done(function(response){
-            console.log(response);
+            console.log(response.currentTemp)
+            var temperature = response.currentTemp
+            var blah = $('<div class="inner_information">').html("<p><strong>Current Temp</strong> "+temperature+" </p>");
+            container.append(blah);
           });
   },
 
