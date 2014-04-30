@@ -9,13 +9,16 @@ onReady: function(){
       buildPage.hideForms();
       buildPage.hideSubHeader();
       // buildPage.hideCategories();
-      $("#sign_up").on("click", buildPage.showSignUpForm);
-      $("#log_in").on("click", buildPage.showLogInForm);
+      $("#sign_up").click(buildPage.showSignUpForm);
+      $("#log_in").click(buildPage.showLogInForm);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#form2").on("submit", buildPage.logInUser);
       // $(".category_container_boro").on("click", buildPage.chooseBorough);
-      $("#weather_icon").on("click", buildPage.showWeather);
-      $("#food_icon").on("click", buildPage.showFood);
+      $("#weather_icon").click(buildPage.showWeather);
+      $("#news_icon").click(buildPage.showNews);
+      $("#food_icon").click(buildPage.showFood);
+      $("#movies_icon").click(buildPage.showMovies);
+
   },
 
 
@@ -195,7 +198,9 @@ buildCategories: function(){
 
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
-    var location = "Brooklyn"
+
+    var location = "Brooklyn";
+
     $.ajax({
           type: 'GET',
           url: "/weather/", /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#show*/
@@ -211,6 +216,64 @@ buildCategories: function(){
             container.append(bundle);
           });
   },
+
+
+    showNews: function(event){
+    var container = $("#news_icon.category_container");
+    var location = "Brooklyn";
+    $.ajax({
+        type: 'GET',
+        url: "/news/",
+        dataType: 'json',
+        data: { location: location }
+        }).done(function(response){
+            var headlines = response.currentHeadlines;
+            var urls = response.currentUrls;
+            var myList = $('<div class="inner_information">');
+
+            $.each(headlines, function(index, headline) {
+
+                var story = $('<ul>').html('<strong>'+ headline + '</strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
+                myList.append(story);
+            });
+
+
+          container.append(myList);
+
+          });
+  },
+
+
+  showMovies: function(event){
+    var container = $("#movies_icon.category_container");
+    var location = "Brooklyn";
+    $.ajax({
+        type: 'GET',
+        url: "/movies/",
+        dataType: 'json',
+        data: { location: location }
+        }).done(function(response){
+            var theaters = response.currentTheaters;
+            var addresses = response.currentAddresses;
+            var movies = response.currentMovies;
+            var movies_times = response.currentMoviesTimes;
+            var myList = $('<div class="inner_information">');
+            debugger;
+            $.each(theaters, function(index, theater) {
+
+                var theater = $('<ul>').html('<strong>'+ theater + '</strong><p>' + addresses[index] + '</>');
+                myList.append(theater);
+            });
+
+          container.append(myList);
+
+          });
+  },
+
+
+
+
+
 
   showFood: function(event){
     var container = $("#food_icon.category_container");

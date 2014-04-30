@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/weather/' => 'weather#show'
   get '/news/' => 'news#show'
   get '/restaurants/' => 'restaurants#show'
+  get '/movies/' => 'movies#show'
 
   post '/session' => 'session#create'
 
