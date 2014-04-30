@@ -10,9 +10,14 @@ onReady: function(){
       buildPage.hideSubHeader();
       $("#sign_up").on("click", buildPage.showSignUpForm);
       $("form").on("submit", buildPage.signUpNewUser);
+<<<<<<< HEAD
       $("#weather_icon").click(buildPage.showWeather);
       $("#news_icon").click(buildPage.showNews);
 
+=======
+      $("#weather_icon").on("click", buildPage.showWeather);
+      $("#food_icon").on("click", buildPage.showFood);
+>>>>>>> 9e1d17ee9121f49d6ec2551b2dded3b210ae5d77
   },
 
 
@@ -166,6 +171,7 @@ buildCategories: function(){
     var container = $("#weather_icon.category_container");
 
     var location = "Brooklyn";
+
     $.ajax({
           type: 'GET',
           url: "/weather/", /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#show*/
@@ -211,6 +217,20 @@ buildCategories: function(){
 
 
 
+
+
+  showFood: function(event){
+    var container = $("#food_icon.category_container");
+    var location = "Brooklyn"
+    $.ajax({
+          type: 'GET',
+          url: "/restaurants/",
+          dataType: 'json',
+          data: { location: location }
+          }).done(function(response){
+          console.log(response.names);
+        })
+  },
 
   chooseBureau: function(){
     // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
