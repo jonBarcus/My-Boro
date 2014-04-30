@@ -10,14 +10,11 @@ onReady: function(){
       buildPage.hideSubHeader();
       $("#sign_up").on("click", buildPage.showSignUpForm);
       $("form").on("submit", buildPage.signUpNewUser);
-<<<<<<< HEAD
       $("#weather_icon").click(buildPage.showWeather);
       $("#news_icon").click(buildPage.showNews);
-
-=======
-      $("#weather_icon").on("click", buildPage.showWeather);
       $("#food_icon").on("click", buildPage.showFood);
->>>>>>> 9e1d17ee9121f49d6ec2551b2dded3b210ae5d77
+      $("#movies_icon").click(buildPage.showMovies);
+
   },
 
 
@@ -203,7 +200,6 @@ buildCategories: function(){
             var myList = $('<div class="inner_information">');
 
             $.each(headlines, function(index, headline) {
-              debugger;
 
                 var story = $('<ul>').html('<strong>'+ headline + '</strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
                 myList.append(story);
@@ -214,6 +210,34 @@ buildCategories: function(){
 
           });
   },
+
+
+  showMovies: function(event){
+    var container = $("#movies_icon.category_container");
+    var location = "Brooklyn";
+    $.ajax({
+        type: 'GET',
+        url: "/movies/",
+        dataType: 'json',
+        data: { location: location }
+        }).done(function(response){
+            var theaters = response.currentTheaters;
+            var addresses = response.currentAddresses;
+            var movies = response.currentMovies;
+            var movies_times = response.currentMoviesTimes;
+            var myList = $('<div class="inner_information">');
+            debugger;
+            $.each(theaters, function(index, theater) {
+
+                var theater = $('<ul>').html('<strong>'+ theater + '</strong><p>' + addresses[index] + '</>');
+                myList.append(theater);
+            });
+
+          container.append(myList);
+
+          });
+  },
+
 
 
 
