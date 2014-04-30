@@ -6,10 +6,14 @@ onReady: function(){
       buildPage.buildForms();
       buildPage.buildMaps();
       buildPage.buildCategories();
-      buildPage.hideForm();
+      buildPage.hideForms();
       buildPage.hideSubHeader();
+      // buildPage.hideCategories();
       $("#sign_up").on("click", buildPage.showSignUpForm);
+      $("#log_in").on("click", buildPage.showLogInForm);
       $("form").on("submit", buildPage.signUpNewUser);
+      $("#form2").on("submit", buildPage.logInUser);
+      // $(".category_container_boro").on("click", buildPage.chooseBorough);
       $("#weather_icon").on("click", buildPage.showWeather);
       $("#food_icon").on("click", buildPage.showFood);
   },
@@ -22,7 +26,7 @@ buildHeader: function(){
     buildHeader
       .append('<img class="img_header_logo" src="assets/PNGs/My-Boro_Header.png">')
       .append('<a href="" id="sign_up"><img src="assets/PNGs/Sign_Up.png" class="img_new_session"></a>')
-      .append('<img src="assets/PNGs/Log_In.png" class="img_login_session">');
+      .append('<a href="" id="log_in"><img src="assets/PNGs/Log_In.png" class="img_login_session">');
 
    buildHeader.append("<div id='line'>");
 
@@ -55,12 +59,12 @@ buildHeader: function(){
 
 
   buildForms: function(){
-    var form = $("#signUpForm")
+    var form = $("#signUpForm");
+    var formTwo = $("#loginForm");
     $("body").append("<div id='main_container'>");
     $("#main_container").append(form);
-
+    $("#main_container").append(formTwo);
   },
-
 
   buildMaps: function(){
 
@@ -124,17 +128,27 @@ buildCategories: function(){
 
 },
 
-  hideForm: function(){
+  hideForms: function(){
     $("#signUpForm").hide();
+    $("#loginForm").hide();
   },
 
   hideSubHeader: function(){
     $("#subheader").hide();
   },
 
+  hideCategories: function(){
+    $("#categories").hide();
+  },
+
   showSignUpForm: function(event){
     event.preventDefault();
     $("#signUpForm").slideDown();
+  },
+
+  showLogInForm: function(event){
+    event.preventDefault();
+    $("#loginForm").slideDown();
   },
 
   signUpNewUser: function(event){
@@ -161,6 +175,24 @@ buildCategories: function(){
           });
   },
 
+  logInUser: function(event){
+    // debugger
+    event.preventDefault();
+
+    var form = $("form2");
+    var email = $("#email").val();
+    var password = $("#password").val();
+
+    $.ajax({
+          type: 'POST',
+          url: '/session',
+          data: { email: email, password: password }
+        }).done(function(response){
+
+          console.log(response)
+        })
+  },
+
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
     var location = "Brooklyn"
@@ -182,7 +214,9 @@ buildCategories: function(){
 
   showFood: function(event){
     var container = $("#food_icon.category_container");
-    var location = "Brooklyn"
+    var inner = $('<div class="inner_information">');
+    container.append(inner);
+    var location = "Brooklyn";
     $.ajax({
           type: 'GET',
           url: "/restaurants/",
@@ -190,12 +224,16 @@ buildCategories: function(){
           data: { location: location }
           }).done(function(response){
           console.log(response.names);
+          var i = 0;
+          var nameArray = response.names;
+          var addressArray = response.addresses;
+          var ratingsArray = response.ratings;
+          for(i = 0; i < response.names.length; i++){
+            var x = ("<p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>"+addressArray[i]+"</p><p><strong>Rating: </strong>"+ratingsArray[i]+"</p>");
+            inner.append(x);
+          }
         })
   },
-
-  chooseBureau: function(){
-    // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
-  }
 
 };
 

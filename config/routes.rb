@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   get '/news/' => 'news#show'
   get '/restaurants/' => 'restaurants#show'
 
+  post '/session' => 'session#create'
+
 
 end

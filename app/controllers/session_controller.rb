@@ -1,10 +1,12 @@
-class SessionsController < ApplicationController
+class SessionController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_url
+      render :json => { message: "Hello, #{user.name}"!}
+    else
+      render :json => { message: "Login unsuccessful. Please try again."}
     end
   end
 
