@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     resources :favorites
   end
 
+  get '/welcome' => 'welcome#get_weather'
 
 end

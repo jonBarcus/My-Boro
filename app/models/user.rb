@@ -17,4 +17,5 @@ class User < ActiveRecord::Base
       has_many :drinks
       has_many :restaurants
       has_many :news_items
+      has_secure_password
 end

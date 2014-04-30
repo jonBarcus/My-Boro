@@ -21,7 +21,7 @@ class Restaurants
       longitude = location[1]
       @lat_long = true
       response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
-      binding.pry
+
     end
 
     # creating an empty array for the results from the API
