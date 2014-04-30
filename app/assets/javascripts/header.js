@@ -1,6 +1,4 @@
-
 var buildPage = {
-
 
 onReady: function(){
       buildPage.buildHeader();
@@ -8,17 +6,22 @@ onReady: function(){
       buildPage.buildForms();
       buildPage.buildMaps();
       buildPage.buildCategories();
-      buildPage.showSignUpForm();
+      buildPage.hideForm();
+      buildPage.hideSubHeader();
+      $("#sign_up").on("click", buildPage.showSignUpForm);
+      $("form").on("submit", buildPage.signUpNewUser);
+      $("#weather_icon").on("click", buildPage.showWeather);
   },
 
 
 buildHeader: function(){
 
-    var buildHeader = $("<div id='header'>");
+    var buildHeader = $('<div id="header">');
 
-    buildHeader.append("<img class='img_header_logo' src='assets/PNGs/My-Boro_Header.png'>")
-                        .append("<img src='assets/PNGs/Sign_Up.png' class='img_new_session'>")
-                        .append("<img src='assets/PNGs/Log_In.png' class='img_login_session'>");
+    buildHeader
+      .append('<img class="img_header_logo" src="assets/PNGs/My-Boro_Header.png">')
+      .append('<a href="" id="sign_up"><img src="assets/PNGs/Sign_Up.png" class="img_new_session"></a>')
+      .append('<img src="assets/PNGs/Log_In.png" class="img_login_session">');
 
    buildHeader.append("<div id='line'>");
 
@@ -51,11 +54,9 @@ buildHeader: function(){
 
 
   buildForms: function(){
-
+    var form = $("#signUpForm")
     $("body").append("<div id='main_container'>");
-
-    $("#main_container").append("#signUpForm");
-
+    $("#main_container").append(form);
 
   },
 
@@ -122,18 +123,60 @@ buildCategories: function(){
 
 },
 
+  hideForm: function(){
+    $("#signUpForm").hide();
+  },
+
+  hideSubHeader: function(){
+    $("#subheader").hide();
+  },
 
   showSignUpForm: function(event){
+    event.preventDefault();
     $("#signUpForm").slideDown();
   },
 
+  signUpNewUser: function(event){
+    event.preventDefault();
+    console.log(this)
+    var form = $("form")
+    var name = $("#user_name").val()
+    var email = $("#user_email").val()
+    var password = $("#user_password").val()
+    var password_confirmation = $("#user_password_confirmation").val();
+
+        $.ajax({
+          type: 'POST',
+          url: '/users',
+          data: { user: {
+                        name: name,
+                        email: email,
+                        password: password,
+                        password_confirmation: password_confirmation}
+                }
+          }).done(function(response){
+            form.after(response.message);
+            form.fadeOut();
+          });
+  },
+
+  showWeather: function(){
+    var container = $("#weather_icon.category_container")
+
+    $.ajax({
+          type: 'GET',
+          url: '/weather/location', /* Weather.initialize(params[:location])-- get 'weather/:location => "weather#location*/
+          dataType: 'json'
+          }).done(function(response){
+            console.log(response);
+          });
+  },
 
   chooseBureau: function(){
     // HIDE BORO MAP AND (REVEAL && SCROLL UP WIDGETS)--BE AWARE OF TIMING HERE!
   }
 
 };
-
 
 
 $(document).ready(buildPage.onReady);
