@@ -2,7 +2,7 @@
 # to be used for providing our application with data
 # regarding restaurants in the NYC area
 # https://developers.google.com/places/documentation/search
-class Restaurants
+class RestaurantsAPI
 
   # object instantiation will take either a string ("Queens")
   # or a longitude and latitude (40.741061, -73.989699)

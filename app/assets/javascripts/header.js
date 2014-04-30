@@ -11,6 +11,7 @@ onReady: function(){
       $("#sign_up").on("click", buildPage.showSignUpForm);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#weather_icon").on("click", buildPage.showWeather);
+      $("#food_icon").on("click", buildPage.showFood);
   },
 
 
@@ -161,7 +162,7 @@ buildCategories: function(){
   },
 
   showWeather: function(event){
-    var container = $("#weather_icon.category_container")
+    var container = $("#weather_icon.category_container");
     var location = "Brooklyn"
     $.ajax({
           type: 'GET',
@@ -171,9 +172,25 @@ buildCategories: function(){
           }).done(function(response){
             console.log(response.currentTemp)
             var temperature = response.currentTemp
-            var blah = $('<div class="inner_information">').html("<p><strong>Current Temp</strong> "+temperature+" </p>");
-            container.append(blah);
+            var humidity = response.currentHumidity
+            var wind = response.currentWind
+            var description = response.currentWeather
+            var bundle = $('<div class="inner_information">').html("<p><strong>Current Temperature: </strong>"+temperature+"</p><p><strong>Humidity: </strong>"+humidity+"</p><p><strong>Wind: </strong>"+wind+"</p><p><strong>Info: </strong>"+description+"</p>");
+            container.append(bundle);
           });
+  },
+
+  showFood: function(event){
+    var container = $("#food_icon.category_container");
+    var location = "Brooklyn"
+    $.ajax({
+          type: 'GET',
+          url: "/restaurants/",
+          dataType: 'json',
+          data: { location: location }
+          }).done(function(response){
+          console.log(response.names);
+        })
   },
 
   chooseBureau: function(){
