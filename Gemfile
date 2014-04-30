@@ -45,6 +45,7 @@ gem 'nokogiri'
 group :development, :test do
   gem 'launchy'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'rails-erd'
   gem 'guard' #watches folders for changes 'trip wire'
   gem 'guard-rspec' #runs rspec
