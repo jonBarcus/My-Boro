@@ -19,7 +19,7 @@ buildHeader: function(){
 
     var buildHeader = $("<div id='header'>");
 
-    buildHeader.prepend("<img id='img_header_logo' src='assets/PNGs/My-Boro_Header.png'>")
+    buildHeader.append("<img class='img_header_logo' src='assets/PNGs/My-Boro_Header.png'>")
                         .append("<img src='assets/PNGs/Sign_Up.png' class='img_new_session'>")
                         .append("<img src='assets/PNGs/Log_In.png' class='img_login_session'>");
 
@@ -37,14 +37,13 @@ buildHeader: function(){
 
     var navBarUl = $('<ul class="subheader">');
 
-    var li1 = $('<li class="use_location">').text("Use my current location");
-    var li2 = $('<li class="bronx">').text("The Bronx");
-    var li3 = $('<li class="brooklyn">').text("Brooklyn");
-    var li4 = $('<li class="staten island">').text("Staten Island");
-    var li5 = $('<li class="queens">').text("Queens");
-    var li6 =  $('<li class="manhattan">').text("Manhattan");
-    var li7 = $('<li class="find_by_zip">').text("Find by Zip");
-
+    var li1 = $('<li class="use_location">').html('<img src="assets/PNGs/Use_current_location.png">');
+    var li2 = $('<li class="bronx">').html('<img src="assets/PNGs/The_Bronx_button.png">');
+    var li3 = $('<li class="brooklyn">').html('<img src="assets/PNGs/Brooklyn_button.png">');
+    var li4 = $('<li class="staten island">').html('<img src="assets/PNGs/Staten_Island_button.png">');
+    var li5 = $('<li class="queens">').html('<img src="assets/PNGs/Queens_button.png">');
+    var li6 =  $('<li class="manhattan">').html('<img src="assets/PNGs/Manhattan_button.png">');
+    var li7 = $('<li class="find_by_zip">').html('<img src="assets/PNGs/Find_by_Zip_Header.png">');
     navBarUl.prepend(li1, li2, li3, li4, li5, li6, li7);
 
     buildSubHeader.append(navBarUl);
