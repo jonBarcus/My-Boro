@@ -40,7 +40,7 @@ body {
   top: -22px;
   left: -66px;
   margin: 0 0 -10px 0;
-  width: 360px;
+  width: 260px;
   height: 75px;
 }
 
@@ -48,11 +48,11 @@ body {
   border: 2px solid green;
   position:relative;
   display:inline-block;
-  top: -20px;
-  left: 380px;
+  top: 0px;
+  left: 280px;
   margin: 0 0 0 20px;
-  height: 60px;
-  width: 60px;
+  height: 100px;
+  width: 200px;
 }
 
 
@@ -60,11 +60,11 @@ body {
   border: 2px solid green;
   position:relative;
   display:inline-block;
-  top: -20px;
+  top: 0px;
   left: 380px;
   margin: 0 0 0 20px;
-  height: 60px;
-  width: 60px;
+  height: 100px;
+  width: 200px;
 }
 
 
@@ -123,7 +123,7 @@ li {
 
 
 #maps{
-/*    border: 2px solid gray;*/
+    border: 2px solid gray;
   position:relative;
   width: 950px;
   margin: 0 auto;
@@ -131,7 +131,7 @@ li {
 
 
 #categories{
-/*  border: 2px solid red;*/
+  border: 2px solid red;
   position:relative;
   width: 950px;
   margin: 0 auto;
@@ -148,7 +148,7 @@ li {
 }
 
 .category_container_boro{
-/*  border: 2px solid purple;*/
+/*  border: 2px solid white;*/
   position:relative;
   display: inline-block;
   width: 300px;
@@ -159,7 +159,7 @@ li {
 
 
 .boro_image{
-/*  border: 2px solid red;*/
+  border: 2px solid red;
   display: block;
   position: relative;
   top: 0px;
@@ -172,7 +172,7 @@ li {
 }
 
 .boro_image_queens {
-/*  border: 2px solid red;*/
+  border: 2px solid red;
   display: block;
   position: relative;
   top: 20px;
@@ -185,7 +185,7 @@ li {
 }
 
 .category_image{
-/*  border: 2px solid purple;*/
+/*  border: 2px solid white;*/
   display: block;
   position: relative;
   top: 0px;
@@ -210,15 +210,15 @@ li {
 
 
 #subway_icon{
-  top:  -18px;
+
 }
 
 #movies_icon{
-  top:  -18px;
+
 }
 
 #bike_icon{
-  top:  -2px;
+
 }
 
 
@@ -226,7 +226,7 @@ li {
   position: absolute;
   overflow: scroll;
   top: 0px;
-  left: 0px;
+  left: 8px;
   width: 280px;
   height: 280px;
   margin: 0 auto;
