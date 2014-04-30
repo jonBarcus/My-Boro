@@ -1,4 +1,4 @@
-class News
+class NewsAPI
 
   def initialize(location)
 

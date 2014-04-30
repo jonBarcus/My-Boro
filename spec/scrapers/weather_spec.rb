@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'scrapers/weather_api'
 
-describe Weather do
+describe WeatherAPI do
 
-  let(:new_weather) { Weather.new("Brooklyn")}
+  let(:new_weather) { WeatherAPI.new("Brooklyn")}
 
   describe "Current Temp Method" do
 

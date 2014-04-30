@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       if user.save
         render :json => { message: "Sign up successful!", name: user.name }
       else
-        render :json => { error: "sucksss"}
+        render :json => { error: "Something went wrong! Please try again."}
       end
   end
 
