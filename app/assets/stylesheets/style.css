@@ -25,46 +25,45 @@ body {
 #header {
 /*  border: 2px solid red;*/
   position:relative;
-  display: block;
   width: 950px;
   height: 60px;
   margin: 0 auto;
-  top: 10px;
+  top: 0px;
 }
 
 
-#img_header_logo{
+.img_header_logo{
 /*  border: 2px solid green;*/
   position:relative;
-  display:inline-block;
-  top: -22px;
-  left: -66px;
-  margin: 0 0 -10px 0;
-  width: 260px;
-  height: 75px;
+  display: inline-block;
+  margin: 0 auto;
+  width: 220px;
+  height: 40px;
+  top: 10px;
+  left: 0px;
 }
 
 .img_new_session{
 /*  border: 2px solid green;*/
+  display: inline-block;
   position:relative;
-  display:inline-block;
-  top: 0px;
-  left: 280px;
-  margin: 0 0 0 20px;
-  height: 100px;
-  width: 200px;
+  top: 8px;
+  left: 460px;
+  margin: 0 0 0 0px;
+  height: 26px;
+  width: 100px;
 }
 
 
 .img_login_session{
 /*  border: 2px solid green;*/
+  display: inline-block;
   position:relative;
-  display:inline-block;
-  top: 0px;
-  left: 380px;
-  margin: 0 0 0 20px;
-  height: 100px;
-  width: 200px;
+  top: 9px;
+  left: 500px;
+  margin: 0 0 0 0px;
+  height: 26px;
+  width: 100px;
 }
 
 
@@ -75,7 +74,7 @@ body {
   width: 950px;
   height: 26px;
   margin: 0 auto;
-  top: 10px;
+  top: -6px;
 }
 
 ul {
@@ -88,20 +87,31 @@ li {
     position: relative;
     display: inline-block;
     font-family: "Helvetica";
-    margin: 0 40px 0 -10px;
+    margin: 0 6px 0 -6px;
+
+}
+
+li img{
+  height: 26px;
+  width: 110px;
 }
 
 .subheader{
 /*  color: red;*/
   position: relative;
   margin: 0 auto;
-  top: -6px;
-  left: 0;
+  top: 4px;
+  left: 0px;
 }
 
 .use_location{
-  margin-left:  -20px;
+  margin-left:  -40px;
   margin-right: 60px;
+}
+
+.use_location img{
+    height: 26px;
+  width: 160px;
 }
 
 .find_by_zip{
@@ -202,9 +212,10 @@ li {
 #line{
   border: 2px solid black;
   position:relative;
+  display: block;
   height: 0px;
   width: 920px;
-  top:-30px;
+  top: 5px;
   border-radius: 12px;
 }
 
