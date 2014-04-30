@@ -1,3 +1,6 @@
+require 'nokogiri'
+require 'open-uri'
+
 # this class will do a search for Movies in/around
 # a specified location.  The location can be given as
 # a STRING: "Staten Island", a ZIP: 10017, or LATTITUDE/
@@ -49,7 +52,7 @@ class Movies
     # interpolation to passed in location and the
     # time parameter
     @response = Nokogiri::HTML(open("http://www.google.com/movies?near=#{location}&mid=&hl=en&date=0&view=list&time=#{time}"))
-
+    closest_movies()
   end
 
   # this method returns an array of the movies playing
@@ -106,14 +109,36 @@ class Movies
       address = my_theater[:address]
       movie1 = my_theater[:movies][0]
       movie_time1 = my_theater[:movies][1]
-      if (movie2 = my_theater[:movies][2])
+      if (my_theater[:movies][2])
+        movie2 = my_theater[:movies][2]
         movie_time2 = my_theater[:movies][3]
       else
         movie2 = ""
         movie_time2 = []
       end
 
-      return movie_array = [theater, address, [movie1, movie_time1], [movie2, movie_time2] ]
+      if (my_theater[:movies][4])
+        movie3 = my_theater[:movies][4]
+        movie_time3 = my_theater[:movies][5]
+      else
+        movie3 = ""
+        movie_time3 = []
+      end
+
+
+
+      # here we check the movie time array and see if
+      # there is an "empty string" valued in Unicode
+      # and delete it if it is equal to "\u200e"
+      movie_time1 = movie_time1.delete_if { |element| element == "\u200e" }
+      movie_time2 = movie_time2.delete_if { |element| element == "\u200e" }
+      movie_time3 = movie_time3.delete_if { |element| element == "\u200e" }
+
+      return @movie_array = [theater, address, [movie1, movie_time1], [movie2, movie_time2], [movie3, movie_time3.delete_if { |element| element == "\u200e"}]]
+      # I included a delete_if for the last array in
+      # case there isn't another movie showing at the
+      # theater
+
   end
 
   # this method shows the next set of movies
@@ -122,15 +147,71 @@ class Movies
   # available.  This is do to the times.  If a search is
   # conducted in the AM, there are fewer showings
   # scheduled, so only a couple will be returned
-  def next_nine_movies
-    self.closest_movies
+  def next_movies
     my_movies = {
           :movies1 => self.display_a_sampler(0),
           :movies2 => self.display_a_sampler(1),
-          :movies3 => self.display_a_sampler(3)
+          :movies3 => self.display_a_sampler(2)
         }
     return my_movies
 
   end
 
+  # this method returns just the NAMES of the first
+  # three movie theaters as an ARRAY
+  def theater_names
+    my_movie_theaters = [self.display_a_sampler(0)[0],
+                          self.display_a_sampler(1)[0],
+                          self.display_a_sampler(2)[0]
+                        ]
+
+    return my_movie_theaters
+  end
+
+  # this method returns the ADDRESSES of the first
+  # three movie theaters as an ARRAY
+  def theater_addresses
+    my_movie_addresses = [display_a_sampler(0)[1],
+                          display_a_sampler(1)[1],
+                          display_a_sampler(2)[1]
+                          ]
+    return my_movie_addresses
+  end
+
+  # this method returns the TITLES of the the first
+  # three movies at each theater as an ARRAY inside
+  # an ARRAY
+  def movie_titles
+    my_movie_titles = [[display_a_sampler(0)[2][0],
+                       display_a_sampler(0)[3][0],
+                       display_a_sampler(0)[4][0]],
+                       [display_a_sampler(1)[2][0],
+                       display_a_sampler(1)[3][0],
+                       display_a_sampler(1)[4][0]],
+                       [display_a_sampler(2)[2][0],
+                       display_a_sampler(2)[3][0],
+                       display_a_sampler(2)[4][0]]
+                      ]
+    return my_movie_titles
+  end
+
+  # this method returns the TIMES of the first
+  # three movies at each theater as an ARRAY inside
+  # an ARRAY
+  def movie_times
+    my_movie_times = [[display_a_sampler(0)[2][1],
+                       display_a_sampler(0)[3][1],
+                       display_a_sampler(0)[4][1]],
+                       [display_a_sampler(1)[2][1],
+                       display_a_sampler(1)[3][1],
+                       display_a_sampler(1)[4][1]],
+                      [display_a_sampler(2)[2][1],
+                      display_a_sampler(2)[3][1],
+                      display_a_sampler(3)[4][1]]
+                    ]
+    return my_movie_times
+  end
+
 end
+
+
