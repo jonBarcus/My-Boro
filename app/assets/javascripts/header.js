@@ -1,23 +1,24 @@
-var current_user_zip = "";
-var current_user_city = "";
+var current_user_zip;
+var current_user_city;
 
 var buildPage = {
 
 onReady: function(){
-      buildPage.grabLocation();
-      buildPage.buildHeader();
-      buildPage.buildSubHeader();
-      buildPage.buildForms();
-      buildPage.buildMaps();
-      buildPage.buildCategories();
-      buildPage.hideForms();
-      buildPage.hideSubHeader();
-      // buildPage.chooseBorough();
 
-      // buildPage.hideCategories();
+      buildPage.grabLocation(function(){
+        buildPage.buildHeader();
+        buildPage.buildSubHeader();
+        buildPage.buildForms();
+        buildPage.buildMaps();
+        buildPage.buildCategories();
+        buildPage.hideForms();
+        buildPage.hideSubHeader();
+        // buildPage.hideCategories();
+      });
+
       $("#sign_up").click(buildPage.showSignUpForm);
       $("#log_in").click(buildPage.showLogInForm);
-      $(".category_container_boro").click(buildPage.chooseBorough);
+      // $(".category_container_boro").click(buildPage.chooseBorough);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#form2").on("submit", buildPage.logInUser);
       $("#weather_icon").click(buildPage.showWeather);
@@ -95,7 +96,7 @@ buildHeader: function(){
     var map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    var map6 = $("<div class='category_container_boro' id='use_location_image' name="+current_user_zip+">");
+    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
     map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
@@ -159,17 +160,21 @@ buildCategories: function(){
     $("#loginForm").slideDown();
   },
 
-  grabLocation: function(){
+  grabLocation: function(callback){
     $.ajax({
         type: 'GET',
         url: '/session',
         dataType: 'json'
       }).done(function(data){
-        console.log(data.current_user_city);
-        console.log(data.current_user_zipcode);
+        console.log("AJAX request complete!");
         current_user_zip = data.current_user_zipcode;
         current_user_city = data.current_user_city;
+        // $(".use_location_image").attr('name', current_user_city);
+        console.log(current_user_city);
+        console.log(current_user_zip);
+        callback();
       });
+
   },
 
   signUpNewUser: function(event){
@@ -217,7 +222,7 @@ buildCategories: function(){
 
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
-    var location = "Brooklyn";
+    var location = (current_user_zip).to_i;
     container.empty();
 
     $.ajax({
@@ -239,7 +244,7 @@ buildCategories: function(){
 
     showNews: function(event){
     var container = $("#news_icon.category_container");
-    var location = "Brooklyn";
+    var location = current_user_city;
     $.ajax({
         type: 'GET',
         url: "/news/",
@@ -264,7 +269,7 @@ buildCategories: function(){
 
   showMovies: function(event){
     var container = $("#movies_icon.category_container");
-    var location = "Brooklyn";
+    var location = (current_user_zip).to_i;
     $.ajax({
         type: 'GET',
         url: "/movies/",
@@ -323,7 +328,7 @@ buildCategories: function(){
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
-    var location = "Brooklyn";
+    var location = (current_user_zip).to_i;
     $.ajax({
           type: 'GET',
           url: "/restaurants/",
@@ -374,13 +379,12 @@ buildCategories: function(){
         })
 
 
-  chooseBorough: function(){
-    current_user_region = $(this).attr("name");
-    current_user_zip = Location.zipcode;
-    console.log(current_user_zip);
-    console.log(current_user_region);
-
-  },
+  // chooseBorough: function(){
+  //   console.log(this);
+  //   // current_user_city = $(this).attr("name");
+  //   console.log(current_user_zip);
+  //   console.log(current_user_city);
+  // },
 };
 
 
