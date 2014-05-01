@@ -1,10 +1,10 @@
 var current_user_zip = "";
-var current_user_lat = "";
-var current_user_lon = "";
+var current_user_city = "";
 
 var buildPage = {
 
 onReady: function(){
+      buildPage.grabLocation();
       buildPage.buildHeader();
       buildPage.buildSubHeader();
       buildPage.buildForms();
@@ -12,11 +12,10 @@ onReady: function(){
       buildPage.buildCategories();
       buildPage.hideForms();
       buildPage.hideSubHeader();
-      buildPage.chooseBorough();
       // buildPage.hideCategories();
       $("#sign_up").click(buildPage.showSignUpForm);
       $("#log_in").click(buildPage.showLogInForm);
-      $("#sign_up").click(buildPage.showSignUpForm);
+      $(".category_container_boro").click(buildPage.chooseBorough);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#form2").on("submit", buildPage.logInUser);
       $("#weather_icon").click(buildPage.showWeather);
@@ -76,26 +75,26 @@ buildHeader: function(){
 
   buildMaps: function(){
 
-    var maps = $("<div id='maps'>");
+    var maps = $('<div id="maps">');
 
 
-    var map1 = $("<div class='category_container_boro' id='manhattan_map'>");
+    var map1 = $('<div class="category_container_boro" id="manhattan_map" name="Manhattan">');
     map1.append('<img src="assets/PNGs/Manhattan.png" class="boro_image">');
 
-    var map2 = $("<div class='category_container_boro' id='brooklyn_map'>");
+    var map2 = $('<div class="category_container_boro" id="brooklyn_map" name="Brooklyn">');
     map2.append('<img src="assets/PNGs/Brooklyn.png" class="boro_image">');
 
-    var map3 = $("<div class='category_container_boro' id='queens_map'>");
+    var map3 = $('<div class="category_container_boro" id="queens_map" name="Queens">');
     map3.append('<img src="assets/PNGs/Queens.png" class="boro_image_queens">');
 
-    var map4 = $("<div class='category_container_boro' id='the_bronx_map'>");
+    var map4 = $('<div class="category_container_boro" id="the_bronx_map" name="Bronx">');
     map4.append('<img src="assets/PNGs/The_Bronx.png" class="boro_image">');
 
-    var map5 = $("<div class='category_container_boro' id='staten_island_map'>");
+    var map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    var map6 = $("<div class='category_container_boro' id='find_by_zip_map'>");
-    map6.append('<img src="assets/PNGs/Find_by_Zip.png" class="boro_image">');
+    var map6 = $("<div class='category_container_boro' id='use_location_image' name="+current_user_zip+">");
+    map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
 
@@ -105,27 +104,26 @@ buildHeader: function(){
 
   },
 
-
 buildCategories: function(){
 
-    var categories = $("<div id='categories'>");
+    var categories = $('<div id="categories">');
 
-    var category1 = $("<div class='category_container' id='weather_icon'>");
+    var category1 = $('<div class="category_container" id="weather_icon">');
     category1.append('<img src="assets/PNGs/Weather_SUNNY_CLOUDY.png" class="category_image">');
 
-    var category2 = $("<div class='category_container' id='subway_icon'>");
+    var category2 = $('<div class="category_container" id="subway_icon">');
     category2.append('<img src="assets/PNGs/Subway.png" class="category_image">');
 
-    var category3 = $("<div class='category_container' id='movies_icon'>");
+    var category3 = $('<div class="category_container" id="movies_icon">');
     category3.append('<img src="assets/PNGs/Movies.png" class="category_image">');
 
-    var category4 = $("<div class='category_container' id='bike_icon'>");
+    var category4 = $('<div class="category_container" id="bike_icon">');
     category4.append('<img src="assets/PNGs/Bike.png" class="category_image">');
 
     var category5 = $("<div class='category_container' id='news_icon'>");
     category5.append('<img src="assets/PNGs/News.png" class="category_image">');
 
-    var category6 = $("<div class='category_container' id='food_icon'>");
+    var category6 = $('<div class="category_container" id="food_icon">');
     category6.append('<img src="assets/PNGs/Food.png" class="category_image">');
 
     categories.prepend(category1, category2, category3, category4, category5, category6);
@@ -157,6 +155,19 @@ buildCategories: function(){
   showLogInForm: function(event){
     event.preventDefault();
     $("#loginForm").slideDown();
+  },
+
+  grabLocation: function(){
+    $.ajax({
+        type: 'GET',
+        url: '/session',
+        dataType: 'json'
+      }).done(function(data){
+        console.log(data.current_user_city);
+        console.log(data.current_user_zipcode);
+        current_user_zip = data.current_user_zipcode;
+        current_user_city = data.current_user_city;
+      });
   },
 
   signUpNewUser: function(event){
@@ -204,8 +215,8 @@ buildCategories: function(){
 
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
-
     var location = "Brooklyn";
+    container.empty();
 
     $.ajax({
           type: 'GET',
@@ -263,7 +274,6 @@ buildCategories: function(){
             var movies = response.currentMovies;
             var movies_times = response.currentMoviesTimes;
             var myList = $('<div class="inner_information">');
-            debugger;
             $.each(theaters, function(index, theater) {
 
                 var theater = $('<ul>').html('<strong>'+ theater + '</strong><p>' + addresses[index] + '</>');
@@ -328,35 +338,16 @@ buildCategories: function(){
             inner.append(x);
           }
         })
+
   },
 
-  chooseBorough: function(event){
-    if($("#manhattan_map").click(function(){
-      current_user_zip = 10020;
-      current_user_lat = 40.714623;
-      current_user_lon = -74.006605;
-    })elsif$("#brooklyn_map").click(function(){
-      current_user_zip = 11216;
-      current_user_lat = 40.7111;
-      current_user_lon = -73.9565;
-    })elsif$("#queens_map").click(function(){
-      current_user_zip = 11366;
-      current_user_lat = 40.729;
-      current_user_lon = -73.798;
-    })elsif$("#staten_island_map").click(function(){
-      current_user_zip = 10308;
-      current_user_lat = 40.55291;
-      current_user_lon = -74.14956;
-    })elsif$("#the_bronx_map").click(function(){
-      current_user_zip = 10457;
-      current_user_lat = 40.85742;
-      current_user_lon = -73.91313;
-    })elsif$("").
-      ){
+  chooseBorough: function(){
+    current_user_region = $(this).attr("name");
+    current_user_zip = Location.zipcode;
+    console.log(current_user_zip);
+    console.log(current_user_region);
 
-    }
   },
-
 };
 
 

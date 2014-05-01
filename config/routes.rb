@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   get '/movies/' => 'movies#show'
 
   post '/session' => 'session#create'
-
+  get '/session' => 'session#index'
 
 end
