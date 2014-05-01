@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require 'open-uri'
 
 # this class creates an instance of the MTA status
