@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   post '/user/:id/news_items/' => 'movies#favorites'
 
 
+  get '/session' => 'session#index'
 
 end
