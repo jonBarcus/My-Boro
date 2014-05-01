@@ -5,17 +5,15 @@ var buildPage = {
 
 onReady: function(){
 
-      buildPage.grabLocation(function(){
-        buildPage.buildHeader();
-        buildPage.buildSubHeader();
-        buildPage.buildForms();
-        buildPage.buildMaps();
-        buildPage.buildCategories();
-        buildPage.hideForms();
-        buildPage.hideSubHeader();
-        // buildPage.hideCategories();
-      });
 
+      buildPage.buildHeader();
+      buildPage.buildSubHeader();
+      buildPage.buildForms();
+      buildPage.buildMaps();
+      buildPage.buildCategories();
+      buildPage.hideForms();
+      buildPage.hideSubHeader();
+        // buildPage.hideCategories();
       $("#sign_up").click(buildPage.showSignUpForm);
       $("#log_in").click(buildPage.showLogInForm);
       // $(".category_container_boro").click(buildPage.chooseBorough);
@@ -43,7 +41,6 @@ buildHeader: function(){
     $("body").prepend(buildHeader);
 
   },
-
 
 
   buildSubHeader: function(){
@@ -77,9 +74,19 @@ buildHeader: function(){
   },
 
   buildMaps: function(){
+    $.ajax({
+    type: 'GET',
+    url: '/session',
+    dataType: 'json'
+  }).done(function(data){
+    console.log("AJAX request complete!");
+    current_user_zip = data.current_user_zipcode;
+    current_user_city = data.current_user_city;
+    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
+    console.log(current_user_city);
+    console.log(current_user_zip);
 
     var maps = $('<div id="maps">');
-
 
     var map1 = $('<div class="category_container_boro" id="manhattan_map" name="Manhattan">');
     map1.append('<img src="assets/PNGs/Manhattan.png" class="boro_image">');
@@ -96,14 +103,13 @@ buildHeader: function(){
     var map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
+    // var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
     map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
 
-
     $("#main_container").append(maps);
-
+  })
 
   },
 
@@ -130,12 +136,9 @@ buildCategories: function(){
     category6.append('<img src="assets/PNGs/Food.png" class="category_image">');
 
     categories.prepend(category1, category2, category3, category4, category5, category6);
-
-
     $("#main_container").append(categories);
 
-
-},
+  },
 
   hideForms: function(){
     $("#signUpForm").hide();
@@ -160,22 +163,6 @@ buildCategories: function(){
     $("#loginForm").slideDown();
   },
 
-  grabLocation: function(callback){
-    $.ajax({
-        type: 'GET',
-        url: '/session',
-        dataType: 'json'
-      }).done(function(data){
-        console.log("AJAX request complete!");
-        current_user_zip = data.current_user_zipcode;
-        current_user_city = data.current_user_city;
-        // $(".use_location_image").attr('name', current_user_city);
-        console.log(current_user_city);
-        console.log(current_user_zip);
-        callback();
-      });
-
-  },
 
   signUpNewUser: function(event){
     event.preventDefault();
@@ -222,8 +209,9 @@ buildCategories: function(){
 
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
-    var location = (current_user_zip).to_i;
-    container.empty();
+
+    var location = current_user_zip;
+    console.log(location);
 
     $.ajax({
           type: 'GET',
@@ -240,7 +228,6 @@ buildCategories: function(){
             container.append(bundle);
           });
   },
-
 
     showNews: function(event){
     var container = $("#news_icon.category_container");
@@ -261,7 +248,6 @@ buildCategories: function(){
                 myList.append(story);
             });
 
-
           container.append(myList);
 
           });
@@ -269,7 +255,9 @@ buildCategories: function(){
 
   showMovies: function(event){
     var container = $("#movies_icon.category_container");
-    var location = (current_user_zip).to_i;
+
+    var location = current_user_zip;
+
     $.ajax({
         type: 'GET',
         url: "/movies/",
@@ -328,7 +316,9 @@ buildCategories: function(){
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
-    var location = (current_user_zip).to_i;
+
+    var location = current_user_zip;
+
     $.ajax({
           type: 'GET',
           url: "/restaurants/",
@@ -340,7 +330,7 @@ buildCategories: function(){
             var addressArray = response.addresses;
             var ratingsArray = response.ratings;
             for(i = 0; i < response.names.length; i++){
-              var restaurantCard = $("<div class='restaurant-card'><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
+              var restaurantCard = $("<div class='restaurant-card'><h3>Restaurants</h3><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
               var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
               faveButton.on("click", buildPage.addFavorite);
               restaurantCard.append(faveButton);
@@ -373,12 +363,12 @@ buildCategories: function(){
           var addressArray = response.addresses;
           var ratingsArray = response.ratings;
           for(i = 0; i < response.names.length; i++){
-            var x = ("<p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>"+addressArray[i]+"</p><p><strong>Rating: </strong>"+ratingsArray[i]+"</p><button class='restaurant' name='restaurant" +[i]+ "''>Add to Favorites!</button>");
-            inner.append(x);
+            var drinkCollection = ("<div class='restaurant-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p><button class='restaurant' name='restaurant" + [i] + "''>Add to Favorites!</button>");
+            inner.append(drinkCollection);
           }
         })
 
-
+      }
   // chooseBorough: function(){
   //   console.log(this);
   //   // current_user_city = $(this).attr("name");
