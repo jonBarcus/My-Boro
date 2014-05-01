@@ -109,7 +109,7 @@ buildHeader: function(){
     maps.prepend(map1, map2, map3, map4, map5, map6);
 
     $("#main_container").append(maps);
-  })
+  });
 
   },
 
