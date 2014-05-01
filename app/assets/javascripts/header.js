@@ -24,6 +24,7 @@ onReady: function(){
       $("#food_icon").click(buildPage.showFood);
       $("#movies_icon").click(buildPage.showMovies);
       $("#drink_icon").click(buildPage.showDrink);
+      $("#subway_icon").click(buildPage.showMTA);
   },
 
 
@@ -363,12 +364,37 @@ buildCategories: function(){
           var addressArray = response.addresses;
           var ratingsArray = response.ratings;
           for(i = 0; i < response.names.length; i++){
-            var drinkCollection = ("<div class='restaurant-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p><button class='restaurant' name='restaurant" + [i] + "''>Add to Favorites!</button>");
+            var drinkCollection = $("<div class='restaurant-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p><button class='restaurant' name='restaurant" + [i] + "''>Add to Favorites!</button>");
             inner.append(drinkCollection);
           }
         })
 
-      }
+      },
+
+      showMTA: function(event) {
+        var location = "Brooklyn";
+        $.ajax({
+          type: 'GET',
+          url: "/mta/",
+          dataType: 'json',
+          data: { location: location}
+        }).done(buildPage.assembleSubwayInfo);
+      },
+
+      assembleSubwayInfo: function(response){
+          var container = $("#subway_icon");
+          var inner = $('<div class="inner_information">');
+          container.append(inner);
+          var line_array = response.current_lines;
+          var status_array = response.current_status;
+          var myLine = $("<div>");
+          for (i = 0; i < response.current_lines.length; i++){
+            var lines = $("<div class='subway-card'><h3>"+line_array[i]+"</h3><p>"+status_array[i]+"</p>");
+            myLine.append(lines);
+          }
+          inner.append(myLine);
+        }
+
   // chooseBorough: function(){
   //   console.log(this);
   //   // current_user_city = $(this).attr("name");
