@@ -241,9 +241,13 @@ buildCategories: function(){
 
             $.each(headlines, function(index, headline) {
 
-                var story = $('<ul>').html('<strong>'+ headline + ' </strong><a href="' + urls[index] + '" target="_blank">Read More</a><button class="news_item" name="news_item' +[index]+ '">Add to Favorites!</button></ul>');
+                var story = $('<ul>').html('<strong>'+ headline + ' </strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
+                var faveButton = $('<button class="news_item" name="news_item"' +[index]+ '>Add to Favorites!</button>');
+                faveButton.on("click", buildPage.addFavoriteNews);
                 myList.append(story);
+                story.append(faveButton);
             });
+
 
           container.append(myList);
 
@@ -329,7 +333,7 @@ buildCategories: function(){
             for(i = 0; i < response.names.length; i++){
               var restaurantCard = $("<div class='restaurant-card'><h3>Restaurants</h3><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
               var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
-              faveButton.on("click", buildPage.addFavorite);
+              faveButton.on("click", buildPage.addFavoriteFood);
               restaurantCard.append(faveButton);
               inner.append(restaurantCard);
             }
@@ -339,17 +343,48 @@ buildCategories: function(){
 
   // click event to handle adding restaurant as a favorite in the db via ajax
   // removing button and displaying restaurant added
-  addFavorite: function(event) {
+  addFavoriteDrink: function(event) {
 
           var buttonClicked = this;
-          var barName = $(buttonClicked).siblings().eq(1).contents().eq(1);
-          var barAddress = $(buttonClicked).siblings().eq(2).contents().eq(2);
-          var barRating = $(buttonClicked).siblings().eq(1).contents().eq(2);
+          var barName = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
+          var barAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
+          var barRating = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
           debugger;
+          var favorited = $('<p class="favorited">');
+          favorited.text('Added to favorites!');
+          $(buttonClicked).append(favorited);
+
           console.log(barName);
           console.log(barAddress);
           console.log(barRating);
 
+  },
+
+
+  addFavoriteFood: function(event) {
+
+          var buttonClicked = this;
+          var restaurantName = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
+          var restaurantAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
+          var restaurantRating = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
+
+          buttonClicked.remove();
+          console.log(restaurantName);
+          console.log(restaurantAddress);
+          console.log(restaurantRating);
+
+  },
+
+
+  addFavoriteNews: function(event) {
+
+          var buttonClicked = this;
+          var headline = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
+          var url = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
+          buttonClicked.remove();
+
+          console.log(headline);
+          console.log(url);
 
   },
 
@@ -373,11 +408,13 @@ buildCategories: function(){
             var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
             var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
             drinkCollection.append(faveButton);
-            faveButton.on("click", buildPage.addFavorite);
-
+            inner.append(drinkCollection);
+            faveButton.on("click", buildPage.addFavoriteDrink);
           }
         })
     },
+
+
 
     showMTA: function(event) {
       var location = current_user_city;
