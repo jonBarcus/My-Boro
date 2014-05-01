@@ -1,5 +1,7 @@
 var current_user_zip;
 var current_user_city;
+var current_user_lat;
+var current_user_lon;
 
 var maps;
 var map1;
@@ -87,6 +89,8 @@ buildHeader: function(){
   }).done(function(data){
     current_user_zip = data.current_user_zipcode;
     current_user_city = data.current_user_city;
+    current_user_lat = data.current_user_lat;
+    current_user_lon = data.current_user_lon;
     var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
     console.log(current_user_city);
     console.log(current_user_zip);
