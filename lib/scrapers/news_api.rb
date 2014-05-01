@@ -4,6 +4,7 @@ class NewsAPI
 
     # set local variable to the secret NYTimes API key
     news_key = ENV['NYT_ARTICLE_SEARCH_KEY']
+    location = location.gsub(" ", "+")
 
     # putting the HTTParty GET request JSON response to a
     # variable @news_instance
