@@ -17,8 +17,6 @@ onReady: function(){
     buildPage.buildForms();
     buildPage.buildMaps();
     buildPage.buildCategories();
-    buildPage.hideForms();
-    buildPage.hideSubHeader();
     $("#sign_up").click(buildPage.showSignUpForm);
     $("#log_in").click(buildPage.showLogInForm);
     $("form").on("submit", buildPage.signUpNewUser);
@@ -65,6 +63,7 @@ buildHeader: function(){
     buildSubHeader.append(navBarUl);
 
     $("body").append(buildSubHeader);
+    $("#subheader").hide();
 
   },
 
@@ -75,6 +74,8 @@ buildHeader: function(){
     $("body").append("<div id='main_container'>");
     $("#main_container").append(form);
     $("#main_container").append(formTwo);
+    $("#new_user").hide();
+    $("#form2").hide();
   },
 
   buildMaps: function(){
@@ -145,15 +146,6 @@ buildCategories: function(){
 
   },
 
-  hideForms: function(){
-    $("#signUpForm").hide();
-    $("#loginForm").hide();
-  },
-
-  hideSubHeader: function(){
-    $("#subheader").hide();
-  },
-
   showSignUpForm: function(event){
     event.preventDefault();
     $("#signUpForm").slideDown();
@@ -210,8 +202,7 @@ buildCategories: function(){
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
 
-    var location = current_user_zip;
-    console.log(location);
+    var location = current_user_city;
 
     $.ajax({
           type: 'GET',
@@ -381,6 +372,11 @@ buildCategories: function(){
     else if(current_user_city === "Queens"){current_user_zip = queens_zips[Math.floor(Math.random() * queens_zips.length)]}
     else if(current_user_city === "Bronx"){current_user_zip = bronx_zips[Math.floor(Math.random() * bronx_zips.length)]}
     else if(current_user_city === "Manhattan"){current_user_zip = manhattan_zips[Math.floor(Math.random() * manhattan_zips.length)]}
+
+    $("#categories").slideDown();
+    $("#maps").slideUp();
+    $("#subheader").show();
+
   },
 };
 
