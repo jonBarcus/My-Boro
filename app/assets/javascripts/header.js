@@ -336,7 +336,17 @@ buildCategories: function(){
   // click event to handle adding restaurant as a favorite in the db via ajax
   // removing button and displaying restaurant added
   addFavorite: function(event) {
-    console.log("clicked favebutton");
+
+          var buttonClicked = this;
+          var barName = $(buttonClicked).siblings().eq(1).contents().eq(1);
+          var barAddress = $(buttonClicked).siblings().eq(2).contents().eq(2);
+          var barRating = $(buttonClicked).siblings().eq(1).contents().eq(2);
+          debugger;
+          console.log(barName);
+          console.log(barAddress);
+          console.log(barRating);
+
+
   },
 
     showDrink: function(event){
@@ -356,8 +366,11 @@ buildCategories: function(){
           var addressArray = response.addresses;
           var ratingsArray = response.ratings;
           for(i = 0; i < response.names.length; i++){
-            var drinkCollection = $("<div class='restaurant-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p><button class='restaurant' name='restaurant" + [i] + "''>Add to Favorites!</button>");
-            inner.append(drinkCollection);
+            var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
+            var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
+            drinkCollection.append(faveButton);
+            faveButton.on("click", buildPage.addFavorite);
+
           }
         })
     },
