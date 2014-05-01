@@ -1,3 +1,7 @@
+var current_user_zip = "";
+var current_user_lat = "";
+var current_user_lon = "";
+
 var buildPage = {
 
 onReady: function(){
@@ -8,12 +12,12 @@ onReady: function(){
       buildPage.buildCategories();
       buildPage.hideForms();
       buildPage.hideSubHeader();
+      buildPage.chooseBorough();
       // buildPage.hideCategories();
       $("#sign_up").click(buildPage.showSignUpForm);
       $("#log_in").click(buildPage.showLogInForm);
       $("form").on("submit", buildPage.signUpNewUser);
       $("#form2").on("submit", buildPage.logInUser);
-      // $(".category_container_boro").on("click", buildPage.chooseBorough);
       $("#weather_icon").click(buildPage.showWeather);
       $("#news_icon").click(buildPage.showNews);
       $("#food_icon").click(buildPage.showFood);
@@ -189,10 +193,11 @@ buildCategories: function(){
     $.ajax({
           type: 'POST',
           url: '/session',
+          dataType: 'json',
           data: { email: email, password: password }
         }).done(function(response){
-
-          console.log(response)
+          $("#loginForm").after(response.message);
+          form.fadeOut();
         })
   },
 
@@ -243,7 +248,6 @@ buildCategories: function(){
           });
   },
 
-
   showMovies: function(event){
     var container = $("#movies_icon.category_container");
     var location = "Brooklyn";
@@ -270,11 +274,6 @@ buildCategories: function(){
           });
   },
 
-
-
-
-
-
   showFood: function(event){
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
@@ -296,6 +295,33 @@ buildCategories: function(){
             inner.append(x);
           }
         })
+  },
+
+  chooseBorough: function(event){
+    if($("#manhattan_map").click(function(){
+      current_user_zip = 10020;
+      current_user_lat = 40.714623;
+      current_user_lon = -74.006605;
+    })elsif$("#brooklyn_map").click(function(){
+      current_user_zip = 11216;
+      current_user_lat = 40.7111;
+      current_user_lon = -73.9565;
+    })elsif$("#queens_map").click(function(){
+      current_user_zip = 11366;
+      current_user_lat = 40.729;
+      current_user_lon = -73.798;
+    })elsif$("#staten_island_map").click(function(){
+      current_user_zip = 10308;
+      current_user_lat = 40.55291;
+      current_user_lon = -74.14956;
+    })elsif$("#the_bronx_map").click(function(){
+      current_user_zip = 10457;
+      current_user_lat = 40.85742;
+      current_user_lon = -73.91313;
+    })elsif$("").
+      ){
+
+    }
   },
 
 };
