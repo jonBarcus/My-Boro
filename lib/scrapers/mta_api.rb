@@ -7,16 +7,18 @@ class MTA
     # takes the text document, parses into xml
     raw = Nokogiri::XML(open('http://web.mta.info/status/serviceStatus.txt'))
 
-    subways = []
+    @subways = []
 
     # creates a hash out of each of the subway line elements
     raw.children.search("subway").search("line").each do |line|
-      subways << {
+      @subways << {
         name: line.children.search("name").text,
         status: line.children.search("status").text,
         text: Nokogiri::HTML(line.children.search("text").text).text.delete("\n")
-      } 
+      }
     end
+
+    return @subways
   end
 
   def get_sandy_reroute(raw)
@@ -27,5 +29,5 @@ class MTA
     # step 3: use css selector
     doc.css('strong').text
   end
-  
+
 end
