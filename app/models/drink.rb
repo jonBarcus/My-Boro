@@ -1,13 +1,17 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: drinks
 #
 #  id         :integer          not null, primary key
+#  user_id    :integer
 #  name       :string(255)
+#  address    :string(255)
+#  rating     :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
 
-class Category < ActiveRecord::Base
-    has_many :favorites
+class Drink < ActiveRecord::Base
+      belongs_to :user
+
 end

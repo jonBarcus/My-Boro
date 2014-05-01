@@ -31,6 +31,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'httparty'
 
+gem 'nokogiri'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -43,6 +45,7 @@ gem 'httparty'
 group :development, :test do
   gem 'launchy'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'rails-erd'
   gem 'guard' #watches folders for changes 'trip wire'
   gem 'guard-rspec' #runs rspec

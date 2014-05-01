@@ -6,5 +6,12 @@ Rails.application.routes.draw do
     resources :favorites
   end
 
+  get '/weather/' => 'weather#show'
+  get '/news/' => 'news#show'
+  get '/restaurants/' => 'restaurants#show'
+  get '/movies/' => 'movies#show'
+
+  post '/session' => 'session#create'
+
 
 end

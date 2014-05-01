@@ -1,10 +1,11 @@
-class Weather
+class WeatherAPI
 
   # gets weather for the specified borough
   def initialize(location)
 
     # Setting the private API key to a variable to be called in the Get request string
-    weather_key = ENV['WEATHER_API_KEY']
+    weather_key = "6abc86e1f7848ffa"
+    # ENV['WEATHER_API_KEY']
 
     # Completes an HTTParty get request to the Wunderground API
     # Statically set the state to NY but allowed for passing in the city (Bronx/Queens/etc.)

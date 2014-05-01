@@ -1,6 +1,6 @@
 require 'citibikenyc'
 
-class CitiBike
+class CitiBikeAPI
 
   # Get a list of all stations
   def station_list
