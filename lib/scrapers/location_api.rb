@@ -16,9 +16,9 @@ module LocationAPI
     return
   end
 
-  def self.region()
-    region = @response["region"]
-    return region
+  def self.city()
+    city = @response["city"]
+    return city
   end
 
 end

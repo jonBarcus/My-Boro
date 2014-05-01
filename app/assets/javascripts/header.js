@@ -1,9 +1,10 @@
-var current_user_zip = ""
-var current_user_region = "";
+var current_user_zip = "";
+var current_user_city = "";
 
 var buildPage = {
 
 onReady: function(){
+      buildPage.grabLocation();
       buildPage.buildHeader();
       buildPage.buildSubHeader();
       buildPage.buildForms();
@@ -11,7 +12,6 @@ onReady: function(){
       buildPage.buildCategories();
       buildPage.hideForms();
       buildPage.hideSubHeader();
-      buildPage.grabLocation();
       // buildPage.hideCategories();
       $("#sign_up").click(buildPage.showSignUpForm);
       $("#log_in").click(buildPage.showLogInForm);
@@ -93,7 +93,7 @@ buildHeader: function(){
     var map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    var map6 = $("#find_by_current_location").appendTo($(".category_container_boro"));
+    var map6 = $("<div class='category_container_boro' id='use_location_image' name="+current_user_zip+">");
     map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
@@ -103,7 +103,6 @@ buildHeader: function(){
 
 
   },
-
 
 buildCategories: function(){
 
@@ -164,7 +163,10 @@ buildCategories: function(){
         url: '/session',
         dataType: 'json'
       }).done(function(data){
+        console.log(data.current_user_city);
         console.log(data.current_user_zipcode);
+        current_user_zip = data.current_user_zipcode;
+        current_user_city = data.current_user_city;
       });
   },
 

@@ -2,10 +2,10 @@ require 'scrapers/location_api'
 
 class SessionController < ApplicationController
   def index
-    current_user_region = LocationAPI.region
+    current_user_city = LocationAPI.city
     current_user_zipcode = LocationAPI.zipcode
 
-    render :json => { current_user_region: current_user_region, current_user_zipcode: current_user_zipcode }
+    render :json => { current_user_city: current_user_city, current_user_zipcode: current_user_zipcode }
   end
 
   def create
