@@ -1,4 +1,4 @@
-module Location
+module LocationAPI
   @response = HTTParty.get('http://ip-api.com/json')
 
   def self.zipcode()
