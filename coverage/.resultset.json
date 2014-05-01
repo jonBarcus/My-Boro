@@ -1267,6 +1267,9 @@
       ]
     },
 <<<<<<< HEAD
+    "timestamp": 1398969000
+=======
+<<<<<<< HEAD
     "timestamp": 1398896510
   },
   "Cucumber Features": {
@@ -1743,5 +1746,6 @@
 =======
     "timestamp": 1398967560
 >>>>>>> 122f94cb91dbf9f15b7b583f8d50bb1ba4e6454c
+>>>>>>> 7de7507b3ebae5a6aac0cc0890cfa94fba3c2601
   }
 }
