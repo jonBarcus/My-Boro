@@ -12,8 +12,6 @@ class SessionController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
         session[:user_id] = user.id
-        session[:user_zip] = Location.zip
-        session[:user_region] = Location.region
         render :json => { message: "Hello, #{user.name}!"}
     else
       render :json => { message: "Login unsuccessful. Please try again."}
