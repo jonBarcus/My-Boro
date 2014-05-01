@@ -4,6 +4,7 @@ var current_user_city;
 var buildPage = {
 
 onReady: function(){
+
       buildPage.buildHeader();
       buildPage.buildSubHeader();
       buildPage.buildForms();
@@ -21,7 +22,7 @@ onReady: function(){
       $("#news_icon").click(buildPage.showNews);
       $("#food_icon").click(buildPage.showFood);
       $("#movies_icon").click(buildPage.showMovies);
-
+      $("#drink_icon").click(buildPage.showDrink);
   },
 
 
@@ -39,7 +40,6 @@ buildHeader: function(){
     $("body").prepend(buildHeader);
 
   },
-
 
 
   buildSubHeader: function(){
@@ -125,8 +125,8 @@ buildCategories: function(){
     var category3 = $('<div class="category_container" id="movies_icon">');
     category3.append('<img src="assets/PNGs/Movies.png" class="category_image">');
 
-    var category4 = $('<div class="category_container" id="bike_icon">');
-    category4.append('<img src="assets/PNGs/Bike.png" class="category_image">');
+    var category4 = $("<div class='category_container' id='drink_icon'>");
+    category4.append('<img src="assets/PNGs/Drinks.png" class="category_image">');
 
     var category5 = $("<div class='category_container' id='news_icon'>");
     category5.append('<img src="assets/PNGs/News.png" class="category_image">');
@@ -242,7 +242,7 @@ buildCategories: function(){
 
             $.each(headlines, function(index, headline) {
 
-                var story = $('<ul>').html('<strong>'+ headline + '</strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
+                var story = $('<ul>').html('<strong>'+ headline + ' </strong><a href="' + urls[index] + '" target="_blank">Read More</a><button class="news_item" name="news_item' +[index]+ '">Add to Favorites!</button></ul>');
                 myList.append(story);
             });
 
@@ -319,18 +319,49 @@ buildCategories: function(){
           dataType: 'json',
           data: { location: location }
           }).done(function(response){
+            var i = 0;
+            var nameArray = response.names;
+            var addressArray = response.addresses;
+            var ratingsArray = response.ratings;
+            for(i = 0; i < response.names.length; i++){
+              var restaurantCard = $("<div class='restaurant-card'><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
+              var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
+              faveButton.on("click", buildPage.addFavorite);
+              restaurantCard.append(faveButton);
+              inner.append(restaurantCard);
+            }
+
+        })
+  },
+
+  // click event to handle adding restaurant as a favorite in the db via ajax
+  // removing button and displaying restaurant added
+  addFavorite: function(event) {
+    console.log("clicked favebutton");
+  },
+
+    showDrink: function(event){
+    var container = $("#drink_icon.category_container");
+    var inner = $('<div class="inner_information">');
+    container.append(inner);
+    var location = "Brooklyn";
+    $.ajax({
+          type: 'GET',
+          url: "/drinks/",
+          dataType: 'json',
+          data: { location: location }
+          }).done(function(response){
           console.log(response.names);
           var i = 0;
           var nameArray = response.names;
           var addressArray = response.addresses;
           var ratingsArray = response.ratings;
           for(i = 0; i < response.names.length; i++){
-            var x = ("<p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>"+addressArray[i]+"</p><p><strong>Rating: </strong>"+ratingsArray[i]+"</p>");
+            var x = ("<p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>"+addressArray[i]+"</p><p><strong>Rating: </strong>"+ratingsArray[i]+"</p><button class='restaurant' name='restaurant" +[i]+ "''>Add to Favorites!</button>");
             inner.append(x);
           }
         })
 
-  },
 
   // chooseBorough: function(){
   //   console.log(this);

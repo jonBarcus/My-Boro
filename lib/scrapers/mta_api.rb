@@ -23,11 +23,11 @@ class MTA
       }
     end
 
+    manhattan()
+    staten_island()
     queens()
     bronx()
     brooklyn()
-    manhattan()
-    staten_island()
 
   end
 
@@ -46,16 +46,12 @@ class MTA
         @queens_lines_name << line[:name]
         @queens_lines_status << line[:status]
       elsif line[:name] == "ACE"
-        line[:name] = "E"
-        @queens_lines_name << line[:name]
+        name = "AE"
+        @queens_lines_name << name
         @queens_lines_status << line[:status]
       elsif line[:name] == "BDFM"
-        line[:name] = "FM"
-        @queens_lines_name << line[:name]
-        @queens_lines_status << line[:status]
-      elsif line[:name] == "ACE"
-        line[:name] == "A"
-        @queens_lines_name << line[:name]
+        name = "FM"
+        @queens_lines_name << name
         @queens_lines_status << line[:status]
       end
     end
@@ -89,12 +85,12 @@ class MTA
         @bronx_lines_names << line[:name]
         @bronx_lines_status << line[:status]
       elsif line[:name] == "BDFM"
-        line[:name] = "BD"
-        @bronx_lines_names << line[:name]
+        name = "BD"
+        @bronx_lines_names << name
         @bronx_lines_status << line[:status]
       elsif line[:name] == "123"
-        line[:name] = "2"
-        @bronx_lines_names << line[:name]
+        name = "2"
+        @bronx_lines_names << name
         @bronx_lines_status << line[:status]
       end
 
@@ -125,16 +121,16 @@ class MTA
         @brooklyn_lines_names << line[:name]
         @brooklyn_lines_status << line[:status]
       elsif line[:name] == "ACE"
-        line[:name] = "AC"
-        @brooklyn_lines_names << line[:name]
+        name = "AC"
+        @brooklyn_lines_names << name
         @brooklyn_lines_status << line[:status]
       elsif line[:name] == "123"
-        line[:name] = "3"
-        @brooklyn_lines_names << line[:name]
+        name = "3"
+        @brooklyn_lines_names << name
         @brooklyn_lines_status << line[:status]
       elsif line[:name] == "456"
-        line[:name] = "45"
-        @brooklyn_lines_names << line[:name]
+        name = "45"
+        @brooklyn_lines_names << name
         @brooklyn_lines_status << line[:status]
       end
     end
