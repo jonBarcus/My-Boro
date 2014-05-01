@@ -4,8 +4,10 @@ class WeatherAPI
   def initialize(location)
 
     # Setting the private API key to a variable to be called in the Get request string
-    weather_key = "6abc86e1f7848ffa"
-    # ENV['WEATHER_API_KEY']
+    weather_key = ENV['WEATHER_API_KEY']
+
+    # api will not take spaces in call, this
+    location = location.gsub(" ", "_")
 
     # Completes an HTTParty get request to the Wunderground API
     # Statically set the state to NY but allowed for passing in the city (Bronx/Queens/etc.)
