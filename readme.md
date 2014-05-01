@@ -6,16 +6,13 @@ My Boro V0.1.0
 
 [Link to Pivotal Tracker](https://www.pivotaltracker.com/s/projects/1067190)
 
-
-Heroku App
-
-visit on heroku
+[Link to app on Heroku](http://warm-basin-4595.herokuapp.com/)
 
 Current Specs
 
 Development Team:
 
-[Michael Oshman](https://github.com/oshmanm)
-[Carolyn Ganon](https://github.com/ganondalf)
-[Joshua Guthals](https://github.com/zioplox11)
+[Michael Oshman](https://github.com/oshmanm)  |
+[Carolyn Ganon](https://github.com/ganondalf)  |
+[Joshua Guthals](https://github.com/zioplox11)  |
 [Jonathan Barcus](https://github.com/jonBarcus)

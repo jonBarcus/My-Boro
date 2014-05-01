@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/restaurants/' => 'restaurants#show'
   get '/movies/' => 'movies#show'
   get '/drinks/' => 'drinks#show'
+  get '/mta/' => 'mta#show'
 
 
   post '/session' => 'session#create'

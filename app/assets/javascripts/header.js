@@ -1,29 +1,32 @@
 var current_user_zip;
 var current_user_city;
 
+var maps;
+var map1;
+var map2;
+var map3;
+var map4;
+var map5;
+var map6;
+
 var buildPage = {
 
 onReady: function(){
-
-
-      buildPage.buildHeader();
-      buildPage.buildSubHeader();
-      buildPage.buildForms();
-      buildPage.buildMaps();
-      buildPage.buildCategories();
-      buildPage.hideForms();
-      buildPage.hideSubHeader();
-        // buildPage.hideCategories();
-      $("#sign_up").click(buildPage.showSignUpForm);
-      $("#log_in").click(buildPage.showLogInForm);
-      // $(".category_container_boro").click(buildPage.chooseBorough);
-      $("form").on("submit", buildPage.signUpNewUser);
-      $("#form2").on("submit", buildPage.logInUser);
-      $("#weather_icon").click(buildPage.showWeather);
-      $("#news_icon").click(buildPage.showNews);
-      $("#food_icon").click(buildPage.showFood);
-      $("#movies_icon").click(buildPage.showMovies);
-      $("#drink_icon").click(buildPage.showDrink);
+    buildPage.buildHeader();
+    buildPage.buildSubHeader();
+    buildPage.buildForms();
+    buildPage.buildMaps();
+    buildPage.buildCategories();
+    $("#sign_up").click(buildPage.showSignUpForm);
+    $("#log_in").click(buildPage.showLogInForm);
+    $("form").on("submit", buildPage.signUpNewUser);
+    $("#form2").on("submit", buildPage.logInUser);
+    $("#weather_icon").click(buildPage.showWeather);
+    $("#news_icon").click(buildPage.showNews);
+    $("#food_icon").click(buildPage.showFood);
+    $("#movies_icon").click(buildPage.showMovies);
+    $("#drink_icon").click(buildPage.showDrink);
+    $("#subway_icon").click(buildPage.showMTA);
   },
 
 
@@ -61,6 +64,7 @@ buildHeader: function(){
     buildSubHeader.append(navBarUl);
 
     $("body").append(buildSubHeader);
+    $("#subheader").hide();
 
   },
 
@@ -71,6 +75,8 @@ buildHeader: function(){
     $("body").append("<div id='main_container'>");
     $("#main_container").append(form);
     $("#main_container").append(formTwo);
+    $("#new_user").hide();
+    $("#form2").hide();
   },
 
   buildMaps: function(){
@@ -79,36 +85,36 @@ buildHeader: function(){
     url: '/session',
     dataType: 'json'
   }).done(function(data){
-    console.log("AJAX request complete!");
     current_user_zip = data.current_user_zipcode;
     current_user_city = data.current_user_city;
     var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
     console.log(current_user_city);
     console.log(current_user_zip);
 
-    var maps = $('<div id="maps">');
+    maps = $('<div id="maps">');
 
-    var map1 = $('<div class="category_container_boro" id="manhattan_map" name="Manhattan">');
+    map1 = $('<div class="category_container_boro" id="manhattan_map" name="Manhattan">');
     map1.append('<img src="assets/PNGs/Manhattan.png" class="boro_image">');
 
-    var map2 = $('<div class="category_container_boro" id="brooklyn_map" name="Brooklyn">');
+    map2 = $('<div class="category_container_boro" id="brooklyn_map" name="Brooklyn">');
     map2.append('<img src="assets/PNGs/Brooklyn.png" class="boro_image">');
 
-    var map3 = $('<div class="category_container_boro" id="queens_map" name="Queens">');
+    map3 = $('<div class="category_container_boro" id="queens_map" name="Queens">');
     map3.append('<img src="assets/PNGs/Queens.png" class="boro_image_queens">');
 
-    var map4 = $('<div class="category_container_boro" id="the_bronx_map" name="Bronx">');
+    map4 = $('<div class="category_container_boro" id="the_bronx_map" name="Bronx">');
     map4.append('<img src="assets/PNGs/The_Bronx.png" class="boro_image">');
 
-    var map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
+    map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    // var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
     map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
 
     $("#main_container").append(maps);
+  }).done(function(){
+      $(".category_container_boro").click(buildPage.chooseBorough);
   });
 
   },
@@ -137,20 +143,8 @@ buildCategories: function(){
 
     categories.prepend(category1, category2, category3, category4, category5, category6);
     $("#main_container").append(categories);
+    categories.hide();
 
-  },
-
-  hideForms: function(){
-    $("#signUpForm").hide();
-    $("#loginForm").hide();
-  },
-
-  hideSubHeader: function(){
-    $("#subheader").hide();
-  },
-
-  hideCategories: function(){
-    $("#categories").hide();
   },
 
   showSignUpForm: function(event){
@@ -210,8 +204,7 @@ buildCategories: function(){
   showWeather: function(event){
     var container = $("#weather_icon.category_container");
 
-    var location = current_user_zip;
-    console.log(location);
+    var location = current_user_city;
 
     $.ajax({
           type: 'GET',
@@ -360,7 +353,7 @@ buildCategories: function(){
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
-    var location = "Brooklyn";
+    var location = current_user_city;
     $.ajax({
           type: 'GET',
           url: "/drinks/",
@@ -377,17 +370,57 @@ buildCategories: function(){
             var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
             drinkCollection.append(faveButton);
             faveButton.on("click", buildPage.addFavorite);
-            inner.append(drinkCollection);
+
           }
         })
+    },
 
-      }
-  // chooseBorough: function(){
-  //   console.log(this);
-  //   // current_user_city = $(this).attr("name");
-  //   console.log(current_user_zip);
-  //   console.log(current_user_city);
-  // },
+    showMTA: function(event) {
+      var location = current_user_city;
+      $.ajax({
+        type: 'GET',
+        url: "/mta/",
+        dataType: 'json',
+        data: { location: location}
+      }).done(buildPage.assembleSubwayInfo);
+    },
+
+    assembleSubwayInfo: function(response){
+        var container = $("#subway_icon");
+        var inner = $('<div class="inner_information">');
+        container.append(inner);
+        var line_array = response.current_lines;
+        var status_array = response.current_status;
+        var myLine = $("<div>");
+        for (i = 0; i < response.current_lines.length; i++){
+          var lines = $("<div class='subway-card'><h3>"+line_array[i]+"</h3><p>"+status_array[i]+"</p>");
+          myLine.append(lines);
+        }
+        inner.append(myLine);
+      },
+
+  chooseBorough: function(){
+    var brooklyn_zips = [11212, 11213, 11234, 11236, 11209, 11214, 11203, 11210, 11225, 11226];
+    var queens_zips = [11361, 11362, 11366, 11367, 11423, 11432, 11433, 11693, 11694, 11695, 11415, 11416, 11417];
+    var statenIsland_zips = [10314, 10307, 10308, 10309, 10302, 10303];
+    var bronx_zips = [10457, 10467, 10455, 10469, 10472, 10462, 10464, 10466];
+    var manhattan_zips = [10001, 10011, 10018, 10012, 10013, 10014, 10005, 10006, 10021, 10028, 10044, 10128, 10023, 10024, 10025];
+
+    current_user_city = $(this).attr("name");
+
+    console.log(current_user_zip);
+    console.log(current_user_city);
+    if(current_user_city === "Brooklyn"){ current_user_zip = brooklyn_zips[Math.floor(Math.random() * brooklyn_zips.length)]}
+    else if(current_user_city === "Staten Island"){current_user_zip = statenIsland_zips[Math.floor(Math.random() * statenIsland_zips.length)]}
+    else if(current_user_city === "Queens"){current_user_zip = queens_zips[Math.floor(Math.random() * queens_zips.length)]}
+    else if(current_user_city === "Bronx"){current_user_zip = bronx_zips[Math.floor(Math.random() * bronx_zips.length)]}
+    else if(current_user_city === "Manhattan"){current_user_zip = manhattan_zips[Math.floor(Math.random() * manhattan_zips.length)]}
+
+    $("#categories").slideDown();
+    $("#maps").slideUp();
+    $("#subheader").show();
+
+  },
 };
 
 
