@@ -18,18 +18,21 @@ class DrinksController < ApplicationController
   end
 
 
-
-
   def favorites
-        user = User.find(current_user.id)
+      user = User.find(current_user.id)
 
-        myDrinks = 3
-
-
+      myDrinks =  Drink.new(headline: params[:name], url: params[:address], rating: params[:rating])
 
 
+      if myDrinks.save
+        user.drinks << myDrinks
+        render json: { msg: "saved drink" }
+      else
+        render json: { msg: "Your drink item did not get saved" }
+      end
 
   end
+
 
 
 

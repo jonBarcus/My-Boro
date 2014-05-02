@@ -16,4 +16,22 @@ class RestaurantsController < ApplicationController
                     }
 
   end
+
+  def favorites
+      user = User.find(current_user.id)
+
+      myRestaurants =  Restaurant.new(headline: params[:name], url: params[:address], rating: params[:rating])
+
+
+      if myRestaurants.save
+        user.restaurants << myRestaurants
+        render json: { msg: "saved restaurant" }
+      else
+        render json: { msg: "Your restaurant item did not get saved" }
+      end
+
+  end
+
+
+
 end

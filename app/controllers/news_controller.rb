@@ -17,14 +17,14 @@ class NewsController < ApplicationController
 
 
   def favorites
-      user = User.find(:id)
+      user = User.find(current_user.id)
 
       myNews =  NewsItem.new(headline: params[:headline], url: params[:url])
 
 
       if myNews.save
         user.news_items << myNews
-        render json: { msg: "saved user" }
+        render json: { msg: "saved news item" }
       else
         render json: { msg: "Your news item did not get saved" }
       end

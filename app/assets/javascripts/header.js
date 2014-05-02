@@ -336,6 +336,8 @@ buildCategories: function(){
   },
 
   showFood: function(event){
+  event.stopPropagation();
+
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
@@ -366,37 +368,55 @@ buildCategories: function(){
   // click event to handle adding restaurant as a favorite in the db via ajax
   // removing button and displaying restaurant added
   addFavoriteDrink: function(event) {
+      event.stopPropagation();
 
           var buttonClicked = this;
           var barName = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
           var barAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
           var barRating = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
-          debugger;
-          var favorited = $('<p class="favorited">');
-          favorited.text('Added to favorites!');
-          $(buttonClicked).append(favorited);
 
-          console.log(barName);
-          console.log(barAddress);
-          console.log(barRating);
+          $.ajax({
+          type: 'POST',
+          url:  '/favorite_drinks/',
+          dataType: 'json',
+          data: {
+            name: barName,
+            address: barAddress,
+            rating: barRating
+           }
+          }).done(function(response) {
+            var favorited = $('<p class="favorited">');
+            favorited.text('Added to favorites!');
+            $(buttonClicked).prepend(favorited);
+            $(buttonClicked).remove();
+        });
 
   },
 
 
   addFavoriteFood: function(event) {
+          event.stopPropagation();
 
           var buttonClicked = this;
           var restaurantName = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
           var restaurantAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
           var restaurantRating = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
 
-          var favorited = $('<p class="favorited">');
-          favorited.text('Added to favorites!');
-          $(buttonClicked).append(favorited);
-
-          console.log(restaurantName);
-          console.log(restaurantAddress);
-          console.log(restaurantRating);
+           $.ajax({
+          type: 'POST',
+          url:  '/favorite_restaurants/',
+          dataType: 'json',
+          data: {
+            name: restaurantName,
+            address: restaurantAddress,
+            rating: restaurantRating
+           }
+          }).done(function(response) {
+            var favorited = $('<p class="favorited">');
+            favorited.text('Added to favorites!');
+            $(buttonClicked).prepend(favorited);
+            $(buttonClicked).remove();
+        });
 
   },
 
@@ -406,8 +426,6 @@ buildCategories: function(){
           var buttonClicked = this;
           var headline = $(buttonClicked).siblings().eq(0).text();
           var url = $(buttonClicked).siblings().eq(1).attr("href");
-          var userID =
-
 
           $.ajax({
           type: 'POST',
@@ -428,6 +446,7 @@ buildCategories: function(){
   },
 
     showDrink: function(event){
+      event.stopPropagation();
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
@@ -438,20 +457,23 @@ buildCategories: function(){
           dataType: 'json',
           data: { location: location }
           }).done(function(response){
-          console.log(response.names);
-          var i = 0;
-          var nameArray = response.names;
-          var addressArray = response.addresses;
-          var ratingsArray = response.ratings;
-          for(i = 0; i < response.names.length; i++){
-            var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
-            var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
-            drinkCollection.append(faveButton);
-            inner.append(drinkCollection);
-            faveButton.on("click", buildPage.addFavoriteDrink);
-          }
-        })
-    },
+            console.log(response.names);
+            var i = 0;
+            var nameArray = response.names;
+            var addressArray = response.addresses;
+            var ratingsArray = response.ratings;
+            for(i = 0; i < response.names.length; i++){
+              var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
+              var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
+                faveButton.on("click", buildPage.addFavoriteNews);
+                drinkCollection.append(faveButton);
+                inner.append(drinkCollection);
+              }
+
+          container.click(buildPage.toggleViews);
+
+      });
+  },
 
 
 
