@@ -19,9 +19,11 @@ onReady: function(){
     buildPage.buildForms();
     buildPage.buildMaps();
     buildPage.buildCategories();
+    $("#signUpForm").hide();
+    $("#loginForm").hide();
     $("#sign_up").click(buildPage.showSignUpForm);
     $("#log_in").click(buildPage.showLogInForm);
-    $("form").on("submit", buildPage.signUpNewUser);
+    $("#new_user").on("submit", buildPage.signUpNewUser);
     $("#form2").on("submit", buildPage.logInUser);
     $("#weather_icon").click(buildPage.showWeather);
     $("#news_icon").click(buildPage.showNews);
@@ -72,13 +74,11 @@ buildHeader: function(){
 
 
   buildForms: function(){
-    var form = $("#signUpForm");
-    var formTwo = $("#loginForm");
+    var form = $('#signUpForm');
+    var formTwo = $('#loginForm');
     $("body").append("<div id='main_container'>");
     $("#main_container").append(form);
     $("#main_container").append(formTwo);
-    $("#new_user").hide();
-    $("#form2").hide();
   },
 
   buildMaps: function(){
@@ -165,10 +165,11 @@ buildCategories: function(){
   signUpNewUser: function(event){
     event.preventDefault();
 
-    var form = $("form")
-    var name = $("#user_name").val()
-    var email = $("#user_email").val()
-    var password = $("#user_password").val()
+    var form = $("#signUpForm");
+    var after_form = $('<div id="after_message">').appendTo(form);
+    var name = $("#user_name").val();
+    var email = $("#user_email").val();
+    var password = $("#user_password").val();
     var password_confirmation = $("#user_password_confirmation").val();
 
         $.ajax({
@@ -181,13 +182,20 @@ buildCategories: function(){
                         password_confirmation: password_confirmation}
                 }
           }).done(function(response){
-            form.after(response.message);
-            form.fadeOut();
-          });
-  },
+              after_form.text(response.message);
+             if(response.message === "Sign up successful!"){
+               // setInterval(form.fadeOut(), 10000);
+               after_form.empty()
+             }else{
+
+              // form.setInterval(empty(), 3000);
+               //  form.clear();
+               // after_form.empty();
+             }
+        })
+    },
 
   logInUser: function(event){
-    // debugger
     event.preventDefault();
 
     var form = $("form2");
