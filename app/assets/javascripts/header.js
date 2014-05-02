@@ -183,14 +183,11 @@ buildCategories: function(){
                 }
           }).done(function(response){
               after_form.text(response.message);
-             if(response.message === "Sign up successful!"){
-               // setInterval(form.fadeOut(), 10000);
-               after_form.empty()
-             }else{
-
-              // form.setInterval(empty(), 3000);
-               //  form.clear();
-               // after_form.empty();
+              if(response.message == "Sign up successful!"){
+                $('#signUpForm').delay(750).fadeOut('slow');
+              }else{
+                $('#signUpForm').slideDown();
+                after_form.delay(750).fadeOut('slow');
              }
         })
     },
