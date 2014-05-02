@@ -227,6 +227,8 @@ buildCategories: function(){
   },
 
     showNews: function(event){
+      event.stopPropagation();
+
     var container = $("#news_icon.category_container");
     var location = current_user_city;
     $.ajax({
@@ -242,7 +244,7 @@ buildCategories: function(){
             $.each(headlines, function(index, headline) {
 
                 var story = $('<ul>').html('<strong>'+ headline + ' </strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
-                var faveButton = $('<button class="news_item" name="news_item"' +[index]+ '>Add to Favorites!</button>');
+                var faveButton = $('<button class="news_item" name="news_item' +[index]+ '"">Add to Favorites!</button>');
                 faveButton.on("click", buildPage.addFavoriteNews);
                 myList.append(story);
                 story.append(faveButton);
@@ -251,8 +253,20 @@ buildCategories: function(){
 
           container.append(myList);
 
+
+          container.click(buildPage.toggleViews);
+
+
+
           });
   },
+
+  toggleViews: function(event){
+      event.stopPropagation();
+
+
+  },
+
 
   showMovies: function(event){
     var container = $("#movies_icon.category_container");
@@ -368,7 +382,10 @@ buildCategories: function(){
           var restaurantAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
           var restaurantRating = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
 
-          buttonClicked.remove();
+          var favorited = $('<p class="favorited">');
+          favorited.text('Added to favorites!');
+          $(buttonClicked).append(favorited);
+
           console.log(restaurantName);
           console.log(restaurantAddress);
           console.log(restaurantRating);
@@ -377,14 +394,28 @@ buildCategories: function(){
 
 
   addFavoriteNews: function(event) {
-
+          event.stopPropagation();
           var buttonClicked = this;
-          var headline = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
-          var url = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
-          buttonClicked.remove();
+          var headline = $(buttonClicked).siblings().eq(0).text();
+          var url = $(buttonClicked).siblings().eq(1).attr("href");
+          var userID =
 
-          console.log(headline);
-          console.log(url);
+
+          $.ajax({
+          type: 'POST',
+          url:  '/favorite_news_items/',
+          dataType: 'json',
+          data: {
+            headline: headline,
+            url: url
+           }
+          }).done(function(response) {
+            var favorited = $('<p class="favorited">');
+            favorited.text('Added to favorites!');
+            $(buttonClicked).prepend(favorited);
+            $(buttonClicked).remove();
+        });
+
 
   },
 

@@ -15,13 +15,13 @@ Rails.application.routes.draw do
 
   post '/session' => 'session#create'
 
-  post '/user/:id/movies/' => 'movies#favorites'
+  post '/favorite_movies/' => 'movies#favorites'
 
-  post '/user/:id/restaurants/' => 'restaurants#favorites'
+  post '/favorite_restaurants/' => 'restaurants#favorites'
 
-  post '/user/:id/drinks/' => 'drinks#favorites'
+  post '/favorite_drinks/' => 'drinks#favorites'
 
-  post '/user/:id/news_items/' => 'movies#favorites'
+  post '/favorite_news_items/' => 'news#favorites'
 
 
   get '/session' => 'session#index'

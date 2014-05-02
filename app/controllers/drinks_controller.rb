@@ -16,4 +16,22 @@ class DrinksController < ApplicationController
                     }
 
   end
+
+
+
+
+  def favorites
+        user = User.find(current_user.id)
+
+        myDrinks = 3
+
+
+
+
+
+  end
+
+
+
+
 end
