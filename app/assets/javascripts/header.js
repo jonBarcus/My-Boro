@@ -112,7 +112,7 @@ buildHeader: function(){
     map5 = $('<div class="category_container_boro" id="staten_island_map" name="Staten Island">');
     map5.append('<img src="assets/PNGs/Staten_Island.png" class="boro_image">');
 
-    map6.append('<img src="assets/PNGs/Use_current_location.png" class="boro_image">');
+    map6.append('<img src="assets/PNGs/Use_current_location_button.png" class="boro_image">');
 
     maps.prepend(map1, map2, map3, map4, map5, map6);
 
