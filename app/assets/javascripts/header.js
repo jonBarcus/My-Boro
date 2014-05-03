@@ -50,12 +50,12 @@ buildHeader: function(){
     var navBarUl = $('<ul class="subheader">');
 
     var li1 = $('<li class="use_location">').html('<img src="assets/PNGs/Use_current_location.png">');
-    var li2 = $('<li class="bronx">').html('<img src="assets/PNGs/The_Bronx_button.png">');
-    var li3 = $('<li class="brooklyn">').html('<img src="assets/PNGs/Brooklyn_button.png">');
-    var li4 = $('<li class="staten island">').html('<img src="assets/PNGs/Staten_Island_button.png">');
-    var li5 = $('<li class="queens">').html('<img src="assets/PNGs/Queens_button.png">');
-    var li6 =  $('<li class="manhattan">').html('<img src="assets/PNGs/Manhattan_button.png">');
-    var li7 = $('<li class="find_by_zip">').html('<img src="assets/PNGs/Find_by_Zip_Header.png">');
+    var li2 = $('<li class="bronx" name="The Bronx">').html('<img src="assets/PNGs/The_Bronx_button.png">');
+    var li3 = $('<li class="brooklyn" name="Brooklyn">').html('<img src="assets/PNGs/Brooklyn_button.png">');
+    var li4 = $('<li class="staten island" name="Staten Island">').html('<img src="assets/PNGs/Staten_Island_button.png">');
+    var li5 = $('<li class="queens" name="Queens">').html('<img src="assets/PNGs/Queens_button.png">');
+    var li6 =  $('<li class="manhattan" name="Manhattan">').html('<img src="assets/PNGs/Manhattan_button.png">');
+    var li7 = $('<li class="find_by_zip" name="Find  by Zip">').html('<img src="assets/PNGs/Find_by_Zip_Header.png">');
     navBarUl.prepend(li1, li2, li3, li4, li5, li6, li7);
 
     buildSubHeader.append(navBarUl);
@@ -85,8 +85,8 @@ buildHeader: function(){
     current_user_lat = data.current_user_lat;
     current_user_lon = data.current_user_lon;
     var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
-    console.log(current_user_city);
-    console.log(current_user_zip);
+    // console.log(current_user_city);
+    // console.log(current_user_zip);
 
     maps = $('<div id="maps">');
 
@@ -111,7 +111,7 @@ buildHeader: function(){
 
     $("#main_container").append(maps);
   }).done(function(){
-      $(".category_container_boro").click(myBoroApp.chooseBorough);
+      $(".category_container_boro").click(myBoroApp.revealCategories);
   });
 
   },
@@ -140,6 +140,14 @@ buildCategories: function(){
 
     categories.prepend(category1, category2, category3, category4, category5, category6);
     $("#main_container").append(categories);
+
+    $("#weather_icon").click(myBoroApp.showWeather);
+    $("#news_icon").click(myBoroApp.showNews);
+    $("#food_icon").click(myBoroApp.showFood);
+    $("#movies_icon").click(myBoroApp.showMovies);
+    $("#drink_icon").click(myBoroApp.showDrink);
+    $("#subway_icon").click(myBoroApp.showMTA);
+
     categories.hide();
 
   },
@@ -214,7 +222,7 @@ buildCategories: function(){
           dataType: 'json',
           data: { location: location }
           }).done(function(response){
-            console.log(response.currentTemp)
+            // console.log(response.currentTemp)
             var temperature = response.currentTemp
             var humidity = response.currentHumidity
             var wind = response.currentWind
@@ -511,7 +519,7 @@ addFavoriteMovie: function(event) {
           dataType: 'json',
           data: { arg1: arg1, arg2: arg2}
           }).done(function(response){
-            console.log(response.names);
+            // console.log(response.names);
 
             var i = 0;
             var nameArray = response.names;
@@ -556,17 +564,18 @@ addFavoriteMovie: function(event) {
         inner.append(myLine);
       },
 
-  chooseBorough: function(){
+  chooseBorough: function(city_name){
     var brooklyn_zips = [11212, 11213, 11234, 11236, 11209, 11214, 11203, 11210, 11225, 11226];
     var queens_zips = [11361, 11362, 11366, 11367, 11423, 11432, 11433, 11693, 11694, 11695, 11415, 11416, 11417];
     var statenIsland_zips = [10314, 10307, 10308, 10309, 10302, 10303];
     var bronx_zips = [10457, 10467, 10455, 10469, 10472, 10462, 10464, 10466];
     var manhattan_zips = [10001, 10011, 10018, 10012, 10013, 10014, 10005, 10006, 10021, 10028, 10044, 10128, 10023, 10024, 10025];
 
-    current_user_city = $(this).attr("name");
+    current_user_city = city_name;
+    console.log(city_name);
+    console.log("FROGS");
 
-    console.log(current_user_zip);
-    console.log(current_user_city);
+
     if(current_user_city === "Brooklyn"){
       current_user_zip = brooklyn_zips[Math.floor(Math.random() * brooklyn_zips.length)];
       current_user_lat = current_user_city;
@@ -597,23 +606,26 @@ addFavoriteMovie: function(event) {
       current_user_lon = false;
     };
 
-      $("#maps").slideUp();
+},
+
+  revealCategories: function() {
+
+      city =$(this).attr("name");
+
+      myBoroApp.chooseBorough(city);
+
+      $("#maps").fadeOut();
 
       myBoroApp.buildCategories();
 
-      $("#weather_icon").click(myBoroApp.showWeather);
-      $("#news_icon").click(myBoroApp.showNews);
-      $("#food_icon").click(myBoroApp.showFood);
-      $("#movies_icon").click(myBoroApp.showMovies);
-      $("#drink_icon").click(myBoroApp.showDrink);
-      $("#subway_icon").click(myBoroApp.showMTA);
-
-      $("#categories").slideDown();
+      $("#categories").fadeIn();
 
       $("#subheader").show();
 
-  },
+  }
+
 };
+
 
 
 $(document).ready(myBoroApp.onReady);
