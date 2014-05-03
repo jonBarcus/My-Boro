@@ -3,7 +3,14 @@ require 'scrapers/movies_api'
 class MoviesController < ApplicationController
 
   def show
-    movies = MoviesAPI.new(params[:location])
+
+
+    if params[:arg2]==0
+      movies = MoviesAPI.new(params[:arg1])
+    else
+      movies = MoviesAPI.new(params[:arg1], params[:arg2])
+    end
+    # restaurants is returning an array of the top 10 results.
 
     response = {
       current_theaters:           movies.theater_names,

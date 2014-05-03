@@ -18,6 +18,7 @@ class DrinksController < ApplicationController
       ratings:      bars.ratings
     }
 
+
     render :json => { names:       response[:names],
                                 addresses: response[:addresses],
                                 ratings:      response[:ratings]

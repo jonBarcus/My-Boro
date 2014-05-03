@@ -24,6 +24,8 @@ class NightlifeAPI
       latitude = location[0]
       longitude = location[1]
       @lat_long = true
+
+
       response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=bar&sensor=false&types=bar&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
     end
 
@@ -39,18 +41,19 @@ class NightlifeAPI
       i += 1
     end
 
+
   end
 
   # this method returns the names of the restaurants
   # in an array
   def names
+
     i = 0
     name_array = []
     while i < @results_array.length - 1 do
       name_array << @results_array[i]["name"]
       i += 1
     end
-
     return name_array
 
   end

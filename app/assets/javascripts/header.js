@@ -279,13 +279,20 @@ buildCategories: function(){
   showMovies: function(event){
     var container = $("#movies_icon.category_container");
 
-    var location = current_user_zip;
+    if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
+      var arg1 = current_user_city;
+      var arg2 = 0;
+    } else {
+    var arg1 = current_user_lat;
+    var arg2 = current_user_lon;
+    };
+
 
     $.ajax({
         type: 'GET',
         url: "/movies",
         dataType: 'json',
-        data: { location: location }
+        data: { arg1: arg1, arg2: arg2 }
         }).done(function(response){
             var theaters = response.currentTheaters;
             var addresses = response.currentAddresses;
@@ -367,7 +374,7 @@ buildCategories: function(){
 
     if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
       var arg1 = current_user_city;
-      var arg2 = null;
+      var arg2 = 0;
     } else {
     var arg1 = current_user_lat;
     var arg2 = current_user_lon;
@@ -508,7 +515,7 @@ addFavoriteMovie: function(event) {
     container.append(inner);
     if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
       var arg1 = current_user_city;
-      var arg2 = null;
+      var arg2 = 0;
     } else {
     var arg1 = current_user_lat;
     var arg2 = current_user_lon;
@@ -520,9 +527,9 @@ addFavoriteMovie: function(event) {
           url: "/drinks",
           dataType: 'json',
           data: { arg1: arg1, arg2: arg2}
+
           }).done(function(response){
             // console.log(response.names);
-
             var i = 0;
             var nameArray = response.names;
             var addressArray = response.addresses;
@@ -575,7 +582,6 @@ addFavoriteMovie: function(event) {
 
     current_user_city = city_name;
     console.log(city_name);
-    console.log("FROGS");
 
 
     if(current_user_city === "Brooklyn"){
@@ -612,9 +618,19 @@ addFavoriteMovie: function(event) {
 
   revealCategories: function() {
 
-      city =$(this).attr("name");
 
-      myBoroApp.chooseBorough(city);
+      if (isNaN($(this).attr("name"))) {
+        var city =$(this).attr("name");
+        console.log(city);
+        myBoroApp.chooseBorough(city);
+      } else {
+        navigator.geolocation.getCurrentPosition(function(position) {
+              current_user_lat = position.coords.latitude;
+              current_user_lon = position.coords.longitude;
+              });
+        console.log(current_user_lat);
+        console.log(current_user_lon);
+      };
 
       myBoroApp.buildCategories();
 
