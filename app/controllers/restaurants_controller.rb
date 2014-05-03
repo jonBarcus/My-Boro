@@ -3,7 +3,13 @@ require 'scrapers/restaurant_api'
 class RestaurantsController < ApplicationController
 
   def show
-    restaurants = RestaurantsAPI.new(params[:location])
+
+    if params[:arg2]==0
+      restaurants = RestaurantsAPI.new(params[:arg1])
+    else
+      restaurants = RestaurantsAPI.new(params[:arg1], params[:arg2])
+    end
+
     # restaurants is returning an array of the top 10 results.
     response = {
       names:        restaurants.names,

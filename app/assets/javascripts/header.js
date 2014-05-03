@@ -11,26 +11,19 @@ var map4;
 var map5;
 var map6;
 
-var buildPage = {
+var myBoroApp = {
 
 onReady: function(){
-    buildPage.buildHeader();
-    buildPage.buildSubHeader();
-    buildPage.buildForms();
-    buildPage.buildMaps();
-    buildPage.buildCategories();
+    myBoroApp.buildHeader();
+    myBoroApp.buildSubHeader();
+    myBoroApp.buildForms();
+    myBoroApp.buildMaps();
     $("#signUpForm").hide();
     $("#loginForm").hide();
-    $("#sign_up").click(buildPage.showSignUpForm);
-    $("#log_in").click(buildPage.showLogInForm);
-    $("#new_user").on("submit", buildPage.signUpNewUser);
-    $("#form2").on("submit", buildPage.logInUser);
-    $("#weather_icon").click(buildPage.showWeather);
-    $("#news_icon").click(buildPage.showNews);
-    $("#food_icon").click(buildPage.showFood);
-    $("#movies_icon").click(buildPage.showMovies);
-    $("#drink_icon").click(buildPage.showDrink);
-    $("#subway_icon").click(buildPage.showMTA);
+    $("#sign_up").click(myBoroApp.showSignUpForm);
+    $("#log_in").click(myBoroApp.showLogInForm);
+    $("#new_user").on("submit", myBoroApp.signUpNewUser);
+    $("#form2").on("submit", myBoroApp.logInUser);
   },
 
 
@@ -118,7 +111,7 @@ buildHeader: function(){
 
     $("#main_container").append(maps);
   }).done(function(){
-      $(".category_container_boro").click(buildPage.chooseBorough);
+      $(".category_container_boro").click(myBoroApp.chooseBorough);
   });
 
   },
@@ -238,7 +231,7 @@ buildCategories: function(){
     var location = current_user_city;
     $.ajax({
         type: 'GET',
-        url: "/news/",
+        url: "/news",
         dataType: 'json',
         data: { location: location }
         }).done(function(response){
@@ -250,7 +243,7 @@ buildCategories: function(){
 
                 var story = $('<ul>').html('<strong>'+ headline + ' </strong><a href="' + urls[index] + '" target="_blank">Read More</a></ul>');
                 var faveButton = $('<button class="news_item" name="news_item' +[index]+ '"">Add to Favorites!</button>');
-                faveButton.on("click", buildPage.addFavoriteNews);
+                faveButton.on("click", myBoroApp.addFavoriteNews);
                 myList.append(story);
                 story.append(faveButton);
             });
@@ -259,7 +252,7 @@ buildCategories: function(){
           container.append(myList);
 
 
-          container.click(buildPage.toggleViews);
+          container.click(myBoroApp.toggleViews);
 
 
 
@@ -280,7 +273,7 @@ buildCategories: function(){
 
     $.ajax({
         type: 'GET',
-        url: "/movies/",
+        url: "/movies",
         dataType: 'json',
         data: { location: location }
         }).done(function(response){
@@ -304,7 +297,15 @@ buildCategories: function(){
                 var one_times_third = $('<ul>').html(movies_times[index][0][2])
                 movie_one.append(one_times_third)
                 }
+
+
                 myList.append(movie_one)
+
+                var faveButton = $('<button class="movie" name="movie"' +[index]+ '>Add to Favorites!</button>');
+                faveButton.on("click", myBoroApp.addFavoriteMovie);
+                movie_one.append(faveButton);
+
+
                 if (!(movies[index][1] === undefined)) {
 
                   var movie_two = $('<ul>').html(movies[index][1])
@@ -315,16 +316,31 @@ buildCategories: function(){
                   movie_two.append(two_times_second)
                   movie_two.append(two_times_third)
                   myList.append(movie_two)
-                }
-                // var movie_three = $('<ul>').html(movies[index][2])
-                // var three_times_first = $('<ul>').html(movies_times[index][0][0])
-                // var three_times_second = $('<ul>').html(movies_times[index][0][1])
-                // var three_times_third = $('<ul>').html(movies_times[index][0][2])
 
-                // movie_three.append(three_times_first)
-                // movie_three.append(three_times_second)
-                // movie_three.append(three_times_third)
-                // myList.append(movie_three)
+                var faveButton = $('<button class="movie" name="movie"' +[index]+ '>Add to Favorites!</button>');
+                faveButton.on("click", myBoroApp.addFavoriteMovie);
+                movie_two.append(faveButton);
+
+                };
+
+                if (!(movies[index][2] === undefined)) {
+                var movie_three = $('<ul>').html(movies[index][2])
+                var three_times_first = $('<ul>').html(movies_times[index][0][0])
+                var three_times_second = $('<ul>').html(movies_times[index][0][1])
+                var three_times_third = $('<ul>').html(movies_times[index][0][2])
+
+                movie_three.append(three_times_first)
+                movie_three.append(three_times_second)
+                movie_three.append(three_times_third)
+                myList.append(movie_three)
+
+                var faveButton = $('<button class="movie" name="movie"' +[index]+ '>Add to Favorites!</button>');
+                faveButton.on("click", myBoroApp.addFavoriteMovie);
+                movie_three.append(faveButton);
+
+                };
+
+
             });
 
             container.append(myList);
@@ -339,13 +355,19 @@ buildCategories: function(){
     var inner = $('<div class="inner_information">');
     container.append(inner);
 
-    var location = current_user_zip;
+    if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
+      var arg1 = current_user_city;
+      var arg2 = null;
+    } else {
+    var arg1 = current_user_lat;
+    var arg2 = current_user_lon;
+    };
 
     $.ajax({
           type: 'GET',
-          url: "/restaurants/",
+          url: "/restaurants",
           dataType: 'json',
-          data: { location: location }
+          data: { arg1: arg1, arg2: arg2 }
           }).done(function(response){
             var i = 0;
             var nameArray = response.names;
@@ -354,7 +376,7 @@ buildCategories: function(){
             for(i = 0; i < response.names.length; i++){
               var restaurantCard = $("<div class='restaurant-card'><h3>Restaurants</h3><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
               var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
-              faveButton.on("click", buildPage.addFavoriteFood);
+              faveButton.on("click", myBoroApp.addFavoriteFood);
               restaurantCard.append(faveButton);
               inner.append(restaurantCard);
             }
@@ -374,12 +396,39 @@ buildCategories: function(){
 
           $.ajax({
           type: 'POST',
-          url:  '/favorite_drinks/',
+          url:  '/favorite_drinks',
           dataType: 'json',
           data: {
             name: barName,
             address: barAddress,
             rating: barRating
+           }
+          }).done(function(response) {
+            var favorited = $('<p class="favorited">');
+            favorited.text('Added to favorites!');
+            $(buttonClicked).prepend(favorited);
+            $(buttonClicked).remove();
+        });
+
+  },
+
+
+addFavoriteMovie: function(event) {
+      event.stopPropagation();
+
+          var buttonClicked = this;
+          var theaterName = $(buttonClicked).siblings().eq(1).contents().eq(1).text();
+          var theaterAddress = $(buttonClicked).siblings().eq(2).contents().eq(1).text();
+          var movieTitle = $(buttonClicked).siblings().eq(3).contents().eq(1).text();
+
+          $.ajax({
+          type: 'POST',
+          url:  '/favorite_movies',
+          dataType: 'json',
+          data: {
+            theater: theaterName,
+            address: theaterAddress,
+            title: movieTitle
            }
           }).done(function(response) {
             var favorited = $('<p class="favorited">');
@@ -401,7 +450,7 @@ buildCategories: function(){
 
            $.ajax({
           type: 'POST',
-          url:  '/favorite_restaurants/',
+          url:  '/favorite_restaurants',
           dataType: 'json',
           data: {
             name: restaurantName,
@@ -426,7 +475,7 @@ buildCategories: function(){
 
           $.ajax({
           type: 'POST',
-          url:  '/favorite_news_items/',
+          url:  '/favorite_news_items',
           dataType: 'json',
           data: {
             headline: headline,
@@ -447,14 +496,23 @@ buildCategories: function(){
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
-    var location = current_user_city;
+    if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
+      var arg1 = current_user_city;
+      var arg2 = null;
+    } else {
+    var arg1 = current_user_lat;
+    var arg2 = current_user_lon;
+    };
+
+
     $.ajax({
           type: 'GET',
-          url: "/drinks/",
+          url: "/drinks",
           dataType: 'json',
-          data: { location: location }
+          data: { arg1: arg1, arg2: arg2}
           }).done(function(response){
             console.log(response.names);
+
             var i = 0;
             var nameArray = response.names;
             var addressArray = response.addresses;
@@ -462,12 +520,12 @@ buildCategories: function(){
             for(i = 0; i < response.names.length; i++){
               var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
               var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
-                faveButton.on("click", buildPage.addFavoriteNews);
+                faveButton.on("click", myBoroApp.addFavoriteNews);
                 drinkCollection.append(faveButton);
                 inner.append(drinkCollection);
               }
 
-          container.click(buildPage.toggleViews);
+          container.click(myBoroApp.toggleViews);
 
       });
   },
@@ -478,10 +536,10 @@ buildCategories: function(){
       var location = current_user_city;
       $.ajax({
         type: 'GET',
-        url: "/mta/",
+        url: "/mta",
         dataType: 'json',
         data: { location: location}
-      }).done(buildPage.assembleSubwayInfo);
+      }).done(myBoroApp.assembleSubwayInfo);
     },
 
     assembleSubwayInfo: function(response){
@@ -509,18 +567,53 @@ buildCategories: function(){
 
     console.log(current_user_zip);
     console.log(current_user_city);
-    if(current_user_city === "Brooklyn"){ current_user_zip = brooklyn_zips[Math.floor(Math.random() * brooklyn_zips.length)]}
-    else if(current_user_city === "Staten Island"){current_user_zip = statenIsland_zips[Math.floor(Math.random() * statenIsland_zips.length)]}
-    else if(current_user_city === "Queens"){current_user_zip = queens_zips[Math.floor(Math.random() * queens_zips.length)]}
-    else if(current_user_city === "Bronx"){current_user_zip = bronx_zips[Math.floor(Math.random() * bronx_zips.length)]}
-    else if(current_user_city === "Manhattan"){current_user_zip = manhattan_zips[Math.floor(Math.random() * manhattan_zips.length)]}
+    if(current_user_city === "Brooklyn"){
+      current_user_zip = brooklyn_zips[Math.floor(Math.random() * brooklyn_zips.length)];
+      current_user_lat = current_user_city;
+      current_user_lon = false;
+    }
 
-    $("#categories").slideDown();
-    $("#maps").slideUp();
-    $("#subheader").show();
+    else if(current_user_city === "Staten Island"){
+      current_user_zip = statenIsland_zips[Math.floor(Math.random() * statenIsland_zips.length)];
+      current_user_lat = current_user_city;
+      current_user_lon = false;
+    }
+
+    else if(current_user_city === "Queens"){
+      current_user_zip = queens_zips[Math.floor(Math.random() * queens_zips.length)];
+      current_user_lat = current_user_city;
+      current_user_lon = false;
+    }
+
+    else if(current_user_city === "Bronx"){
+      current_user_zip = bronx_zips[Math.floor(Math.random() * bronx_zips.length)];
+      current_user_lat = current_user_city;
+      current_user_lon = false;
+    }
+
+    else if(current_user_city === "Manhattan"){
+      current_user_zip = manhattan_zips[Math.floor(Math.random() * manhattan_zips.length)];
+      current_user_lat = current_user_city;
+      current_user_lon = false;
+    };
+
+      $("#maps").slideUp();
+
+      myBoroApp.buildCategories();
+
+      $("#weather_icon").click(myBoroApp.showWeather);
+      $("#news_icon").click(myBoroApp.showNews);
+      $("#food_icon").click(myBoroApp.showFood);
+      $("#movies_icon").click(myBoroApp.showMovies);
+      $("#drink_icon").click(myBoroApp.showDrink);
+      $("#subway_icon").click(myBoroApp.showMTA);
+
+      $("#categories").slideDown();
+
+      $("#subheader").show();
 
   },
 };
 
 
-$(document).ready(buildPage.onReady);
+$(document).ready(myBoroApp.onReady);

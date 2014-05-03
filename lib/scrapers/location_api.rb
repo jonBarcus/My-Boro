@@ -13,7 +13,7 @@ module LocationAPI
 
   def self.lon()
     lon = @response["lon"]
-    return
+    return lon
   end
 
   def self.city()

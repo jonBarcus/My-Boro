@@ -3,8 +3,15 @@ require 'scrapers/nightlife_api'
 class DrinksController < ApplicationController
 
   def show
-    bars = NightlifeAPI.new(params[:location])
+
+
+    if params[:arg2]==0
+      bars = NightlifeAPI.new(params[:arg1])
+    else
+      bars = NightlifeAPI.new(params[:arg1], params[:arg2])
+    end
     # restaurants is returning an array of the top 10 results.
+
     response = {
       names:       bars.names,
       addresses:  bars.addresses,
@@ -15,7 +22,9 @@ class DrinksController < ApplicationController
                                 addresses: response[:addresses],
                                 ratings:      response[:ratings]
                               }
+
   end
+
 
   def favorites
 

@@ -21,9 +21,9 @@ class MoviesController < ApplicationController
 
   def favorites
     if  user = User.find(current_user.id)
-      myMovies =  Movie.new(headline: params[:theater],
-                                            url:         params[:address],
-                                            rating:    params[:title])
+      myMovies =  Movie.new(theater: params[:theater],
+                                            address:         params[:address],
+                                            title:    params[:title])
       if myMovies.save
         user.movies << myMovies
         render json: { msg: "saved movie" }
