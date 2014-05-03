@@ -627,9 +627,9 @@ addFavoriteMovie: function(event) {
         navigator.geolocation.getCurrentPosition(function(position) {
               current_user_lat = position.coords.latitude;
               current_user_lon = position.coords.longitude;
+              console.log(current_user_lat);
+              console.log(current_user_lon);
               });
-        console.log(current_user_lat);
-        console.log(current_user_lon);
       };
 
       myBoroApp.buildCategories();
