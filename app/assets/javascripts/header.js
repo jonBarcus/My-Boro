@@ -619,30 +619,36 @@ addFavoriteMovie: function(event) {
   revealCategories: function() {
 
 
+      function buildSecondPage() {
+        myBoroApp.buildCategories();
+
+        $("#maps").fadeOut(500, function(){
+
+            $("#categories").fadeIn(1000, function() {
+                $("#subheader").slideDown(600, function(){
+                      myBoroApp.activateSubheaderLinks();
+                });
+            });
+
+        });
+      }
+
       if (isNaN($(this).attr("name"))) {
         var city =$(this).attr("name");
         console.log(city);
         myBoroApp.chooseBorough(city);
+        buildSecondPage()
       } else {
         navigator.geolocation.getCurrentPosition(function(position) {
               current_user_lat = position.coords.latitude;
               current_user_lon = position.coords.longitude;
               console.log(current_user_lat);
               console.log(current_user_lon);
+
+              buildSecondPage()
               });
       };
 
-      myBoroApp.buildCategories();
-
-      $("#maps").fadeOut(500, function(){
-
-          $("#categories").fadeIn(1000, function() {
-              $("#subheader").slideDown(600, function(){
-                    myBoroApp.activateSubheaderLinks();
-              });
-          });
-
-      });
 
 
   },
