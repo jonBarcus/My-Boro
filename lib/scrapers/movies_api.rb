@@ -15,15 +15,19 @@ class MoviesAPI
     # 4 = Latenight, 5 = All day
     # The following conditionals only look for options
     # 1-4
-    if now.hour > 20 && now.min > 50
-      time = 4
-    elsif now.hour > 4 && now.min > 50
-      time = 3
-    elsif now.hour == 11 && now.min > 50
-      time = 2
+
+    if now.hour >= 20
+      @time = 4
+    elsif now.hour >= 16 && now.hour < 20
+      @time = 3
+    elsif now.hour >= 11 && now.hour < 16
+      @time = 2
+    elsif now.hour < 11
+      @time = 1
     else
-      time = 1
+      @time = 5
     end
+
 
     # These conditionals check for what is passed in
     # to the instantiation of the object
@@ -50,7 +54,9 @@ class MoviesAPI
     # following methods is set here, using string
     # interpolation to passed in location and the
     # time parameter
-    @response = Nokogiri::HTML(open("http://www.google.com/movies?near=#{location}&mid=&hl=en&date=0&view=list&time=#{time}"))
+
+    @response = Nokogiri::HTML(open("http://www.google.com/movies?near=#{location}&mid=&hl=en&date=0&view=list&time=#{@time}"))
+
     closest_movies()
   end
 

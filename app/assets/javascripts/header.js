@@ -141,6 +141,8 @@ buildCategories: function(){
     categories.prepend(category1, category2, category3, category4, category5, category6);
     $("#main_container").append(categories);
 
+    categories.hide();
+
     $("#weather_icon").click(myBoroApp.showWeather);
     $("#news_icon").click(myBoroApp.showNews);
     $("#food_icon").click(myBoroApp.showFood);
@@ -148,7 +150,7 @@ buildCategories: function(){
     $("#drink_icon").click(myBoroApp.showDrink);
     $("#subway_icon").click(myBoroApp.showMTA);
 
-    categories.hide();
+
 
   },
 
@@ -614,13 +616,23 @@ addFavoriteMovie: function(event) {
 
       myBoroApp.chooseBorough(city);
 
-      $("#maps").fadeOut();
-
       myBoroApp.buildCategories();
 
-      $("#categories").fadeIn();
+      $("#maps").fadeOut(500, function(){
 
-      $("#subheader").show();
+          $("#categories").fadeIn(1000, function() {
+              $("#subheader").slideDown(600, function(){
+                    myBoroApp.activateSubheaderLinks();
+              });
+          });
+
+      });
+
+
+  },
+
+
+  activateSubheaderLinks: function() {
 
   }
 

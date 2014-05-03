@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
 
   def show
     movies = MoviesAPI.new(params[:location])
+
     response = {
       current_theaters:           movies.theater_names,
       current_addresses:        movies.theater_addresses,
