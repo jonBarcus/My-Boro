@@ -656,8 +656,7 @@ addFavoriteMovie: function(event) {
         buildSecondPage();
       } else {
               myBoroApp.getGeolocation();
-              console.log(current_user_city);
-              console.log(current_user_zip);
+
               buildSecondPage();
       };
 
