@@ -6,15 +6,15 @@ module LocationAPI
     return zip_code
   end
 
-  def self.lat()
-    lat = @response["lat"]
-    return lat
-  end
+  # def self.lat()
+  #   lat = @response["lat"]
+  #   return lat
+  # end
 
-  def self.lon()
-    lon = @response["lon"]
-    return lon
-  end
+  # def self.lon()
+  #   lon = @response["lon"]
+  #   return lon
+  # end
 
   def self.city()
     city = @response["city"]

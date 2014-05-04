@@ -14,6 +14,7 @@ var map6;
 var myBoroApp = {
 
 onReady: function(){
+    // myBoroApp.getGeolocation();
     myBoroApp.buildHeader();
     myBoroApp.buildSubHeader();
     myBoroApp.buildForms();
@@ -26,6 +27,14 @@ onReady: function(){
     $("#form2").on("submit", myBoroApp.logInUser);
   },
 
+
+  getGeolocation: function() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        current_user_lat = position.coords.latitude;
+        current_user_lon = position.coords.longitude;
+      });
+
+  },
 
 buildHeader: function(){
 
@@ -75,16 +84,16 @@ buildHeader: function(){
   },
 
   buildMaps: function(){
-    $.ajax({
+  $.ajax({
     type: 'GET',
     url: '/session',
     dataType: 'json'
   }).done(function(data){
     current_user_zip = data.current_user_zipcode;
     current_user_city = data.current_user_city;
-    current_user_lat = data.current_user_lat;
-    current_user_lon = data.current_user_lon;
-    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_zip+'">');
+    myBoroApp.getGeolocation();
+
+    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_lat+'">');
     // console.log(current_user_city);
     // console.log(current_user_zip);
 
@@ -631,27 +640,23 @@ addFavoriteMovie: function(event) {
             });
 
         });
-      }
+
+      };
 
       if (isNaN($(this).attr("name"))) {
         var city =$(this).attr("name");
         console.log(city);
         myBoroApp.chooseBorough(city);
-        buildSecondPage()
+        buildSecondPage();
       } else {
-        navigator.geolocation.getCurrentPosition(function(position) {
-              current_user_lat = position.coords.latitude;
-              current_user_lon = position.coords.longitude;
-              console.log(current_user_lat);
-              console.log(current_user_lon);
-
-              buildSecondPage()
-              });
+              myBoroApp.getGeolocation();
+  debugger;
+              buildSecondPage();
       };
 
 
-
   },
+
 
 
   activateSubheaderLinks: function() {

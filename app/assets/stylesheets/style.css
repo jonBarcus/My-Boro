@@ -96,8 +96,17 @@ li img{
   width: 110px;
 }
 
+li.bronx{
+  top: 0px;
+  width: 40px;
+
+}
+
+
+
 .subheader{
 /*  color: red;*/
+border: 2px solid black;
   position: relative;
   margin: 0 auto;
   top: 4px;

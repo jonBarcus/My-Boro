@@ -4,10 +4,14 @@ class SessionController < ApplicationController
   def index
     current_user_city = LocationAPI.city
     current_user_zipcode = LocationAPI.zipcode
-    current_user_lat = LocationAPI.lat
-    current_user_lon= LocationAPI.lon
+    # current_user_lat = LocationAPI.lat
+    # current_user_lon= LocationAPI.lon
 
-    render :json => { current_user_city: current_user_city, current_user_zipcode: current_user_zipcode, current_user_lat: current_user_lat, current_user_lon: current_user_lon }
+    render :json => { current_user_city: current_user_city,
+      current_user_zipcode: current_user_zipcode,
+      # current_user_lat: current_user_lat,
+      # current_user_lon: current_user_lon
+    }
   end
 
   def create
