@@ -408,7 +408,7 @@ buildCategories: function(){
             var addressArray = response.addresses;
             var ratingsArray = response.ratings;
             for(i = 0; i < response.names.length; i++){
-              var restaurantCard = $("<div class='restaurant-card'><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
+              var restaurantCard = $("<div class='restaurant-card'><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Zagat Rating: </strong>" + ratingsArray[i] + "</p></div>");
               var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
               faveButton.on("click", myBoroApp.addFavoriteFood);
               restaurantCard.append(faveButton);
@@ -553,7 +553,7 @@ addFavoriteMovie: function(event) {
             var addressArray = response.addresses;
             var ratingsArray = response.ratings;
             for(i = 0; i < response.names.length; i++){
-              var drinkCollection = $("<div class='drink-card'><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
+              var drinkCollection = $("<div class='drink-card'><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Zagat Rating: </strong>"+ratingsArray[i] +"</p>");
               var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
                 faveButton.on("click", myBoroApp.addFavoriteNews);
                 drinkCollection.append(faveButton);
