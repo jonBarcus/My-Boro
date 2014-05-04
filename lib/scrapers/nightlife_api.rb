@@ -42,7 +42,7 @@ class NightlifeAPI
         @results_array << response["results"][i]
         i += 1
       else
-        i = i
+        i += 1
       end
       return @results_array
     end
