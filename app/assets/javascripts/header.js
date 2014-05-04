@@ -89,7 +89,11 @@ buildHeader: function(){
     dataType: 'json'
   }).done(function(data){
     current_user_zip = data.current_user_zipcode;
-    current_user_city = data.current_user_city;
+    if ((data.current_user_city === "Brooklyn") || (data.current_user_city === "Queens") || (data.current_user_city === "Bronx") || (data.current_user_city === "Staten Island") || (data.current_user_city === "Manhattan")) {
+      current_user_city = data.current_user_city;
+    }  else {
+      current_user_city = "Manhattan";
+    }
     // myBoroApp.getGeolocation();
 
     var map6 = $('<div class="category_container_boro" id="use_location_image" name="0">');
@@ -237,7 +241,7 @@ buildCategories: function(){
             var humidity = response.currentHumidity;
             var wind = response.currentWind;
             var description = response.currentWeather;
-            var bundle = $('<div class="inner_information">').html("<p><strong>Current Temperature: </strong>"+temperature+"</p><p><strong>Humidity: </strong>"+humidity+"</p><p><strong>Wind: </strong>"+wind+"</p><p><strong>Info: </strong>"+description+"</p>");
+            var bundle = $('<div class="inner_information">').html("<h3>Current Weather</h3><p><strong>Temperature: </strong>"+temperature+"</p><p><strong>Humidity: </strong>"+humidity+"</p><p><strong>Wind: </strong>"+wind+"</p><p><strong>Info: </strong>"+description+"</p>");
             container.append(bundle);
           });
   },
@@ -246,6 +250,8 @@ buildCategories: function(){
       event.stopPropagation();
 
     var container = $("#news_icon.category_container");
+
+
     var location = current_user_city;
     $.ajax({
         type: 'GET',
@@ -256,6 +262,7 @@ buildCategories: function(){
             var headlines = response.currentHeadlines;
             var urls = response.currentUrls;
             var myList = $('<div class="inner_information">');
+            myList.html("<h3>Current News</h3>");
 
             $.each(headlines, function(index, headline) {
 
@@ -307,6 +314,7 @@ buildCategories: function(){
             var movies = response.currentMovies;
             var movies_times = response.currentMoviesTimes;
             var myList = $('<div class="inner_information">');
+            myList.html("<h3>Current Movies</h3>");
             $.each(theaters, function(index, theater) {
 
                 var theater = $('<ul>').html('<strong>'+ theater + '</strong><p>' + addresses[index] + '</>');
@@ -378,6 +386,7 @@ buildCategories: function(){
 
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
+    inner.html("<h3>Restaurants</h3>");
     container.append(inner);
 
     if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
@@ -399,7 +408,7 @@ buildCategories: function(){
             var addressArray = response.addresses;
             var ratingsArray = response.ratings;
             for(i = 0; i < response.names.length; i++){
-              var restaurantCard = $("<div class='restaurant-card'><h3>Restaurants</h3><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
+              var restaurantCard = $("<div class='restaurant-card'><p><strong>Name: </strong>"+nameArray[i]+"</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>" + ratingsArray[i] + "</p></div>");
               var faveButton = $('<button class="restaurant" name="restaurant"' +[i]+ '>Add to Favorites!</button>');
               faveButton.on("click", myBoroApp.addFavoriteFood);
               restaurantCard.append(faveButton);
@@ -520,6 +529,7 @@ addFavoriteMovie: function(event) {
       event.stopPropagation();
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
+    inner.html("<h3>Drinks</h3>");
     container.append(inner);
     if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
       var arg1 = current_user_lat;
@@ -543,7 +553,7 @@ addFavoriteMovie: function(event) {
             var addressArray = response.addresses;
             var ratingsArray = response.ratings;
             for(i = 0; i < response.names.length; i++){
-              var drinkCollection = $("<div class='drink-card'><h3>Drinks</h3><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
+              var drinkCollection = $("<div class='drink-card'><p><strong>Name: </strong>" + nameArray[i] + "</p><p><strong>Address: </strong>" + addressArray[i] + "</p><p><strong>Rating: </strong>"+ratingsArray[i] +"</p>");
               var faveButton = $('<button class="drink" name="drink' + [i] + '">Add to Favorites!</button>');
                 faveButton.on("click", myBoroApp.addFavoriteNews);
                 drinkCollection.append(faveButton);
@@ -570,12 +580,13 @@ addFavoriteMovie: function(event) {
     assembleSubwayInfo: function(response){
         var container = $("#subway_icon");
         var inner = $('<div class="inner_information">');
+        inner.html("<h3>Subway Status</h3>");
         container.append(inner);
         var line_array = response.current_lines;
         var status_array = response.current_status;
         var myLine = $("<div>");
         for (i = 0; i < response.current_lines.length; i++){
-          var lines = $("<div class='subway-card'><h3>"+line_array[i]+"</h3><p>"+status_array[i]+"</p>");
+          var lines = $("<div class='subway-card'><h3>Line: "+line_array[i]+"</h3><p>"+status_array[i]+"</p>");
           myLine.append(lines);
         }
         inner.append(myLine);

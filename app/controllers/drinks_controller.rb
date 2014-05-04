@@ -5,14 +5,14 @@ class DrinksController < ApplicationController
   def show
 
 
-    if params[:arg2]==0
+    if params[:arg2] == 0
       bars = NightlifeAPI.new(params[:arg1])
     else
       bars = NightlifeAPI.new(params[:arg1], params[:arg2])
     end
 
 
-    # restaurants is returning an array of the top 10 results.
+    # drinks api is returning an array of the top 10 zagat results.
 
     response = {
       names:       bars.names,
