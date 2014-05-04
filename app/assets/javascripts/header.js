@@ -233,10 +233,10 @@ buildCategories: function(){
           data: { location: location }
           }).done(function(response){
             // console.log(response.currentTemp)
-            var temperature = response.currentTemp
-            var humidity = response.currentHumidity
-            var wind = response.currentWind
-            var description = response.currentWeather
+            var temperature = response.currentTemp;
+            var humidity = response.currentHumidity;
+            var wind = response.currentWind;
+            var description = response.currentWeather;
             var bundle = $('<div class="inner_information">').html("<p><strong>Current Temperature: </strong>"+temperature+"</p><p><strong>Humidity: </strong>"+humidity+"</p><p><strong>Wind: </strong>"+wind+"</p><p><strong>Info: </strong>"+description+"</p>");
             container.append(bundle);
           });
