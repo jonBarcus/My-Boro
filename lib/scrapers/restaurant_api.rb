@@ -40,6 +40,7 @@ class RestaurantsAPI
       else
         i = i
       end
+      return @results_array
     end
 
 
