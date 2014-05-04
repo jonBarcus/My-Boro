@@ -72,7 +72,7 @@ body {
 /*  border: 2px solid red;*/
   position:relative;
   width: 950px;
-  height: 26px;
+  height: 30px;
   margin: 0 auto;
   top: -6px;
 }
@@ -96,17 +96,17 @@ li img{
   width: 110px;
 }
 
-li.bronx{
+/*li.bronx{
   top: 0px;
   width: 40px;
 
-}
+}*/
 
 
 
 .subheader{
 /*  color: red;*/
-border: 2px solid black;
+/*border: 2px solid black;*/
   position: relative;
   margin: 0 auto;
   top: 4px;
