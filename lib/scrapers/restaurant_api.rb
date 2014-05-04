@@ -33,16 +33,25 @@ class RestaurantsAPI
 
     # will put the first 10 results from the API call that have a Zagat rating of 3.8 or higher
     # in to the results_array
-     while @results_array.length <= 10 do
+
+    10.times do
       if response["results"][i]["rating"] >= 3.8
         @results_array << response["results"][i]
         i += 1
       else
         i += 1
       end
-      return @results_array
+
     end
 
+    if @results_array.length < 3
+      i = 0
+      @results_array = []
+      10.times do
+          @results_array << response["results"][i]
+          i += 1
+      end
+    end
 
   end
 

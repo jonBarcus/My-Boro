@@ -10,6 +10,8 @@ class DrinksController < ApplicationController
     else
       bars = NightlifeAPI.new(params[:arg1], params[:arg2])
     end
+
+
     # restaurants is returning an array of the top 10 results.
 
     response = {

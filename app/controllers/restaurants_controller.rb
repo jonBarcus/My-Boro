@@ -5,14 +5,14 @@ class RestaurantsController < ApplicationController
   def show
 
 
-    if params[:arg2]==0
+    if params[:arg2] == 0
       restaurants = RestaurantsAPI.new(params[:arg1])
     else
       restaurants = RestaurantsAPI.new(params[:arg1], params[:arg2])
     end
 
 
-    # restaurants is returning an array of the top 10 results.
+    # restaurants is returning an array of the top 10 zagat rated results if there were enough highly rated restaurants in the area.
     response = {
       names:        restaurants.names,
       addresses:   restaurants.addresses,

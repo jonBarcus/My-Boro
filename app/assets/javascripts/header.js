@@ -14,7 +14,6 @@ var map6;
 var myBoroApp = {
 
 onReady: function(){
-    // myBoroApp.getGeolocation();
     myBoroApp.buildHeader();
     myBoroApp.buildSubHeader();
     myBoroApp.buildForms();
@@ -91,9 +90,9 @@ buildHeader: function(){
   }).done(function(data){
     current_user_zip = data.current_user_zipcode;
     current_user_city = data.current_user_city;
-    myBoroApp.getGeolocation();
+    // myBoroApp.getGeolocation();
 
-    var map6 = $('<div class="category_container_boro" id="use_location_image" name="'+current_user_lat+'">');
+    var map6 = $('<div class="category_container_boro" id="use_location_image" name="0">');
     // console.log(current_user_city);
     // console.log(current_user_zip);
 
@@ -381,12 +380,12 @@ buildCategories: function(){
     var inner = $('<div class="inner_information">');
     container.append(inner);
 
-    if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
+    if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
+      var arg1 = current_user_lat;
+      var arg2 = current_user_lon;
+    } else {
       var arg1 = current_user_city;
       var arg2 = 0;
-    } else {
-    var arg1 = current_user_lat;
-    var arg2 = current_user_lon;
     };
 
     $.ajax({
@@ -522,12 +521,12 @@ addFavoriteMovie: function(event) {
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
     container.append(inner);
-    if (isNaN(current_user_lon) || isNaN(current_user_lat)) {
+    if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
+      var arg1 = current_user_lat;
+      var arg2 = current_user_lon;
+    } else {
       var arg1 = current_user_city;
       var arg2 = 0;
-    } else {
-    var arg1 = current_user_lat;
-    var arg2 = current_user_lon;
     };
 
 
@@ -593,31 +592,23 @@ addFavoriteMovie: function(event) {
     console.log(city_name);
 
 
-    if(current_user_city === "Brooklyn"){
+    if (current_user_city === "Brooklyn"){
       current_user_zip = brooklyn_zips[Math.floor(Math.random() * brooklyn_zips.length)];
       current_user_lat = current_user_city;
       current_user_lon = false;
-    }
-
-    else if(current_user_city === "Staten Island"){
+    } else if (current_user_city === "Staten Island"){
       current_user_zip = statenIsland_zips[Math.floor(Math.random() * statenIsland_zips.length)];
       current_user_lat = current_user_city;
       current_user_lon = false;
-    }
-
-    else if(current_user_city === "Queens"){
+    } else if (current_user_city === "Queens"){
       current_user_zip = queens_zips[Math.floor(Math.random() * queens_zips.length)];
       current_user_lat = current_user_city;
       current_user_lon = false;
-    }
-
-    else if(current_user_city === "Bronx"){
+    } else if (current_user_city === "Bronx"){
       current_user_zip = bronx_zips[Math.floor(Math.random() * bronx_zips.length)];
       current_user_lat = current_user_city;
       current_user_lon = false;
-    }
-
-    else if(current_user_city === "Manhattan"){
+    } else if (current_user_city === "Manhattan"){
       current_user_zip = manhattan_zips[Math.floor(Math.random() * manhattan_zips.length)];
       current_user_lat = current_user_city;
       current_user_lon = false;
@@ -627,6 +618,7 @@ addFavoriteMovie: function(event) {
 
   revealCategories: function() {
 
+    console.log(this);
 
       function buildSecondPage() {
         myBoroApp.buildCategories();
@@ -646,10 +638,15 @@ addFavoriteMovie: function(event) {
       if (isNaN($(this).attr("name"))) {
         var city =$(this).attr("name");
         console.log(city);
+        console.log(this);
+        current_user_lon =  "";
+        current_user_lat  = "";
         myBoroApp.chooseBorough(city);
         buildSecondPage();
       } else {
               myBoroApp.getGeolocation();
+              console.log(current_user_city);
+              console.log(current_user_zip);
               buildSecondPage();
       };
 
