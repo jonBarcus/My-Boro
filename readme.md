@@ -16,3 +16,5 @@ Development Team:
 [Carolyn Ganon](https://github.com/ganondalf)  |
 [Joshua Guthals](https://github.com/zioplox11)  |
 [Jonathan Barcus](https://github.com/jonBarcus)
+
+Design by:  [Atanas Djibirov](http://cargocollective.com/nascodesign)
