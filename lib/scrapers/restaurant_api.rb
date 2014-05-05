@@ -17,12 +17,15 @@ class RestaurantsAPI
       location = location[0].gsub(" ", "+")
       response = HTTParty.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+#{location}&sensor=false&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
     else
+
+
       latitude = location[0]
       longitude = location[1]
       @lat_long = true
-      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}")
+      response = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&types=food&sensor=false&types=restaurant&zagat_selected&key=#{ENV['GOOGLE_SEARCH_API_KEY']}&opennow")
 
     end
+
 
     # creating an empty array for the results from the API
     # call to go.  We are also setting up a variable for iteration
@@ -34,8 +37,8 @@ class RestaurantsAPI
     # will put the first 10 results from the API call that have a Zagat rating of 3.8 or higher
     # in to the results_array
 
-    10.times do
-      if response["results"][i]["rating"] >= 3.8
+    (response["results"].length).times do
+      if response["results"][i]["rating"] && response["results"][i]["rating"] >= 3.8
         @results_array << response["results"][i]
         i += 1
       else
@@ -44,14 +47,21 @@ class RestaurantsAPI
 
     end
 
+
     if @results_array.length < 3
       i = 0
       @results_array = []
-      10.times do
-          @results_array << response["results"][i]
-          i += 1
+      (sresponse["results"].length).times do
+        if response["results"][i]["rating"] != nil
+            @results_array << response["results"][i]
+            i += 1
+        else
+            i += 1
+        end
       end
-    end
+
+   end
+
 
   end
 
