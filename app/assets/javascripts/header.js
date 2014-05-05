@@ -386,7 +386,7 @@ buildCategories: function(){
 
     var container = $("#food_icon.category_container");
     var inner = $('<div class="inner_information">');
-    inner.html("<h3>Restaurants</h3>");
+    inner.html("<h3>Restaurants (currently open)</h3>");
     container.append(inner);
 
     if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
@@ -529,7 +529,7 @@ addFavoriteMovie: function(event) {
       event.stopPropagation();
     var container = $("#drink_icon.category_container");
     var inner = $('<div class="inner_information">');
-    inner.html("<h3>Drinks</h3>");
+    inner.html("<h3>Bars (currently open)</h3>");
     container.append(inner);
     if (typeof current_user_lat == "number"  && typeof current_user_lon == "number") {
       var arg1 = current_user_lat;

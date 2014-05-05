@@ -62,6 +62,13 @@ class RestaurantsAPI
 
    end
 
+   if @results_array.length < 1
+      @results_array[0]["name"] = "None are currently open in your area"
+      @results_array[0]["vicinity"] = ""
+      @results_array[0]["formatted_address"] = ""
+      @results_array[0]["rating"] = ""
+   end
+
 
   end
 
